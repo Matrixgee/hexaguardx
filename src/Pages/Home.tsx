@@ -84,11 +84,11 @@ const Home = () => {
   return (
     <div className="">
       <Hero />
-      {/* <Hassel />
+
       <HowItWorks />
-      <InvestmentPlan />
-      <Testimonals/>
-      <FAQ /> */}
+      {/* <InvestmentPlan /> */}
+      {/* <Testimonals/> */}
+      {/* <FAQ />  */}
       {/* <NotificationModal message={currentMessage} visible={visible} /> */}
     </div>
   );
