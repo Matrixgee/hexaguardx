@@ -1,13 +1,16 @@
-// src/components/FAQSection.tsx
-import React, { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "../Context/theme";
+import { FaChevronDown, FaQuestionCircle } from "react-icons/fa";
 
 interface FAQItem {
   question: string;
   answer: string;
 }
 
-const FAQSection: React.FC = () => {
+const FAQSection = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs: FAQItem[] = [
@@ -41,62 +44,219 @@ const FAQSection: React.FC = () => {
       answer:
         "Yes, we provide various tax-efficient investment strategies and can help you set up retirement accounts like IRAs, Roth IRAs, and 401(k) rollovers. Our advisors also implement tax-loss harvesting and other strategies to minimize your tax burden while maximizing growth.",
     },
+    {
+      question: "How secure is my investment data?",
+      answer:
+        "We employ bank-level security measures including 256-bit SSL encryption, multi-factor authentication, and regular security audits. Your personal and financial data is stored in secure, encrypted databases and we never share your information with third parties without your explicit consent.",
+    },
+    {
+      question: "What support do you provide to new investors?",
+      answer:
+        "New investors receive comprehensive onboarding including educational resources, one-on-one consultations with our advisors, access to our learning center, and ongoing support through our 24/7 customer service team. We also provide regular portfolio reviews and market updates.",
+    },
   ];
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  return (
-    <section className="py-16 bg-white dark:bg-black transition-colors duration-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Find answers to common questions about our investment services and
-            processes.
-          </p>
-        </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
 
-        <div className="max-w-3xl mx-auto">
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
+  return (
+    <div
+      className={`w-full py-20 px-4 md:px-8 lg:px-16 ${
+        isDark
+          ? "bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900"
+          : "bg-gradient-to-br from-gray-50 via-blue-50 to-white"
+      }`}
+    >
+      <div className="container mx-auto max-w-4xl">
+        {/* Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div
+            className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-6 ${
+              isDark ? "bg-blue-900/50" : "bg-blue-100"
+            }`}
+          >
+            <FaQuestionCircle
+              className={`w-8 h-8 ${isDark ? "text-blue-400" : "text-primary"}`}
+            />
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+            <span className={isDark ? "text-white" : "text-gray-800"}>
+              Frequently Asked
+            </span>
+            <br />
+            <span className={isDark ? "text-blue-400" : "text-primary"}>
+              Questions
+            </span>
+          </h2>
+
+          <p
+            className={`text-lg md:text-xl max-w-3xl mx-auto ${
+              isDark ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            Find answers to common questions about our investment services and
+            processes. Can't find what you're looking for? Contact our support
+            team.
+          </p>
+        </motion.div>
+
+        {/* FAQ Items */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="space-y-4"
+        >
           {faqs.map((faq, index) => (
-            <div
+            <motion.div
               key={index}
-              className="mb-4 border-b border-gray-200 dark:border-gray-800 pb-4 last:border-0 last:pb-0"
+              variants={itemVariants}
+              className={`rounded-xl border transition-all duration-300 ${
+                isDark
+                  ? "bg-gray-800/50 border-gray-700 hover:border-blue-500/50"
+                  : "bg-white border-gray-200 hover:border-blue-300"
+              } shadow-lg hover:shadow-xl`}
             >
               <button
-                className="flex justify-between items-center w-full text-left focus:outline-none"
+                className="flex justify-between items-center w-full text-left p-6 focus:outline-none"
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={openIndex === index}
               >
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                <h3
+                  className={`text-lg md:text-xl font-semibold pr-4 ${
+                    isDark ? "text-white" : "text-gray-800"
+                  }`}
+                >
                   {faq.question}
                 </h3>
-                <span className="ml-6 flex-shrink-0 text-gray-500 dark:text-gray-400">
-                  {openIndex === index ? (
-                    <ChevronUp size={20} />
-                  ) : (
-                    <ChevronDown size={20} />
-                  )}
-                </span>
+
+                <motion.div
+                  animate={{ rotate: openIndex === index ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                    isDark ? "bg-blue-900/50" : "bg-blue-100"
+                  }`}
+                >
+                  <FaChevronDown
+                    className={`w-4 h-4 ${
+                      isDark ? "text-blue-400" : "text-primary"
+                    }`}
+                  />
+                </motion.div>
               </button>
 
-              <div
-                className={`mt-2 transition-all duration-300 overflow-hidden ${
-                  openIndex === index
-                    ? "max-h-96 opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
-              >
-                <p className="text-gray-600 dark:text-gray-300">{faq.answer}</p>
-              </div>
-            </div>
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-6 pb-6">
+                      <div
+                        className={`w-full h-px mb-4 ${
+                          isDark ? "bg-gray-700" : "bg-gray-200"
+                        }`}
+                      ></div>
+                      <p
+                        className={`text-base leading-relaxed ${
+                          isDark ? "text-gray-300" : "text-gray-600"
+                        }`}
+                      >
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
+
+        {/* Contact CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className={`mt-16 text-center p-8 rounded-2xl ${
+            isDark
+              ? "bg-gradient-to-r from-blue-900/50 to-purple-900/50 border border-gray-700"
+              : "bg-gradient-to-r from-blue-50 to-purple-50 border border-gray-200"
+          }`}
+        >
+          <h3
+            className={`text-2xl font-bold mb-4 ${
+              isDark ? "text-white" : "text-gray-800"
+            }`}
+          >
+            Still have questions?
+          </h3>
+          <p
+            className={`text-lg mb-6 ${
+              isDark ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            Our expert team is here to help you with any questions about your
+            investment journey.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              className={`px-8 py-4 rounded-lg font-medium text-lg transition-all ${
+                isDark
+                  ? "bg-blue-600 hover:bg-blue-700 text-white"
+                  : "bg-blue-300 hover:bg-blue-600 text-white"
+              }`}
+            >
+              Contact Support
+            </button>
+            <button
+              className={`px-8 py-4 rounded-lg font-medium text-lg transition-all border-2 ${
+                isDark
+                  ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
+                  : "border-primary text-primary hover:bg-primary hover:text-white"
+              }`}
+            >
+              Schedule Call
+            </button>
+          </div>
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 

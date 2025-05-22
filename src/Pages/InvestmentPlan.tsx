@@ -1,89 +1,329 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../Context/theme";
+import {
+  FaCheck,
+  FaStar,
+  FaCrown,
+  FaRocket,
+  FaDiamond,
+  FaFire,
+} from "react-icons/fa6";
 
 const InvestmentPlan = () => {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   type MenuItem = {
     plan: string;
     daily: string;
     investment: string;
+    icon: JSX.Element;
+    popular?: boolean;
+    gradient: string;
   };
 
   const investPlan: MenuItem[] = [
-    { plan: 'Starter Plan', daily: '10% ROI', investment: '$1000 - $5000' },
-    { plan: 'Basic Plan', daily: '20% ROI', investment: '$5000 - 15000' },
-    { plan: 'Silver Plan', daily: '30% ROI', investment: '$15000 - $20000' },
-    { plan: 'Platinum Plan', daily: '40% ROI', investment: '$20000 - $500000' },
-    { plan: 'Master Plan', daily: '50% ROI', investment: '$50000 - $150000' },
-    { plan: 'Ultimate Plan', daily: '60% ROI', investment: '$150000' },
+    {
+      plan: "Starter Plan",
+      daily: "10% ROI",
+      investment: "$1,000 - $5,000",
+      icon: <FaRocket className="w-8 h-8" />,
+      gradient: "from-green-500 to-emerald-600",
+    },
+    {
+      plan: "Basic Plan",
+      daily: "20% ROI",
+      investment: "$5,000 - $15,000",
+      icon: <FaCheck className="w-8 h-8" />,
+      gradient: "from-blue-500 to-cyan-600",
+    },
+    {
+      plan: "Silver Plan",
+      daily: "30% ROI",
+      investment: "$15,000 - $20,000",
+      icon: <FaStar className="w-8 h-8" />,
+      popular: true,
+      gradient: "from-purple-500 to-pink-600",
+    },
+    {
+      plan: "Platinum Plan",
+      daily: "40% ROI",
+      investment: "$20,000 - $50,000",
+      icon: <FaCrown className="w-8 h-8" />,
+      gradient: "from-orange-500 to-red-600",
+    },
+    {
+      plan: "Master Plan",
+      daily: "50% ROI",
+      investment: "$50,000 - $150,000",
+      icon: <FaDiamond className="w-8 h-8" />,
+      gradient: "from-indigo-500 to-purple-600",
+    },
+    {
+      plan: "Ultimate Plan",
+      daily: "60% ROI",
+      investment: "$150,000+",
+      icon: <FaFire className="w-8 h-8" />,
+      gradient: "from-yellow-500 to-orange-600",
+    },
   ];
 
   const handleInvestNow = () => {
-    navigate('/login');
+    navigate("/auth/login");
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 80,
+        damping: 12,
+      },
+    },
   };
 
   return (
-    <div className="  w-[100%] h-[57rem] flex justify-around items-center flex-col phone:h-auto">
-      <div className="w-[100%] h-[20%] phone:h-[8rem] flex justify-around items-center flex-col  phone:w-[90%]">
+    <div
+      className={`w-full py-20 px-4 md:px-8 lg:px-16 ${
+        isDark
+          ? "bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900"
+          : "bg-gradient-to-br from-gray-100 via-blue-100 to-white"
+      }`}
+    >
+      <div className="container mx-auto">
+        {/* Header Section */}
         <motion.div
-          className="w-[20%] phone:w-[80%] phone:h-[50%] h-[30%] text-white font-bold text-xl justify-center items-center flex rounded-lg bg-yellow-500"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          OUR INVESTMENT PLAN
-        </motion.div>
-        <motion.p
-          className="font-extrabold text-blue-500 text-5xl text-center phone:text-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          The plans we offer are specifically made for you.
-        </motion.p>
-      </div>
-      <div className="  w-[96%] h-[85%]  flex justify-around flex-wrap items-center">
-        {investPlan.map((plan, index) => (
-          <motion.div
-            key={index}
-            className=" CardInvest w-[26%] m-2 h-[48%] rounded-[10px] bg-gray-900 transition-all ease-in-out border-blue-400 border-solid border-[3px] justify-around flex flex-col items-center"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            whileHover={{ scale: 1.1 }}
+          <span
+            className={`inline-block py-3 px-6 rounded-full text-sm font-bold tracking-wider mb-6 ${
+              isDark
+                ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
+                : "bg-gradient-to-r from-primary to-blue-900 text-black"
+            }`}
           >
-            <div className="w-[100%] h-[24%] flex justify-center items-center flex-col">
-              <p className="text-white font-semibold text-[4vh] phone:text-[3.2vh]">{plan.plan}</p>
-              <p className="text-orange-400 text-[3vh] phone:text-[2.5vh]">{plan.daily}</p>
-            </div>
-            <div className="w-[90%] h-[50%] flex flex-col justify-around">
-              <div className="w-[100%] text-white h-[20%] flex justify-between px-2 items-center">
-                <p>Investment</p>
-                <p className="py-1 px-2 text-white text-base bg-slate-800 rounded-lg">{plan.investment}</p>
-              </div>
-              <div className="w-[100%] h-[20%] text-white flex justify-between px-2 items-center">
-                <p>Capital Back</p>
-                <p>yes</p>
-              </div>
-              <div className="w-[100%] h-[20%] text-white flex justify-between px-2 items-center">
-                <p>Return Type</p>
-                <p>Days</p>
-              </div>
-              <div className="w-[100%] h-[20%] text-white flex justify-between px-2 items-center">
-                <p>Number of days</p>
-                <p>30 days</p>
-              </div>
-            </div>
+            OUR INVESTMENT PLANS
+          </span>
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className={isDark ? "text-white" : "text-gray-800"}>
+              The plans we offer are
+            </span>
+            <br />
+            <span className={isDark ? "text-blue-400" : "text-primary"}>
+              specifically made for you
+            </span>
+          </h2>
+
+          <p
+            className={`text-lg md:text-xl max-w-3xl mx-auto ${
+              isDark ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            Choose from our carefully crafted investment plans designed to
+            maximize your returns while minimizing risks. Each plan offers
+            competitive ROI with flexible investment options.
+          </p>
+        </motion.div>
+
+        {/* Investment Cards Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {investPlan.map((plan, index) => (
             <motion.div
-              className="w-[90%] text-white text-lg font-semibold h-[13%] rounded-lg bg-blue-500 cursor-pointer flex justify-center items-center"
-              whileHover={{ scale: 1.1 }}
-              onClick={handleInvestNow}
+              key={index}
+              variants={cardVariants}
+              whileHover={{
+                scale: 1.05,
+                rotateY: 5,
+                transition: { duration: 0.2 },
+              }}
+              className={`relative rounded-2xl p-6 ${
+                isDark
+                  ? "bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700"
+                  : "bg-white border border-gray-200"
+              } shadow-xl hover:shadow-2xl transition-all duration-300`}
             >
-              INVEST NOW
+              {/* Popular Badge */}
+              {plan.popular && (
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                    MOST POPULAR
+                  </span>
+                </div>
+              )}
+
+              {/* Plan Header */}
+              <div className="text-center mb-8">
+                <div
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 bg-gradient-to-r ${plan.gradient}`}
+                >
+                  <div className="text-white">{plan.icon}</div>
+                </div>
+
+                <h3
+                  className={`text-2xl md:text-3xl font-bold mb-2 ${
+                    isDark ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  {plan.plan}
+                </h3>
+
+                <div
+                  className={`text-3xl md:text-4xl font-bold bg-gradient-to-r ${plan.gradient} bg-clip-text text-transparent`}
+                >
+                  {plan.daily}
+                </div>
+              </div>
+
+              {/* Plan Details */}
+              <div className="space-y-4 mb-8">
+                <div
+                  className={`flex justify-between items-center py-3 px-4 rounded-lg ${
+                    isDark ? "bg-gray-700/50" : "bg-gray-50"
+                  }`}
+                >
+                  <span
+                    className={`font-medium ${
+                      isDark ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Investment Range
+                  </span>
+                  <span
+                    className={`font-bold ${
+                      isDark ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    {plan.investment}
+                  </span>
+                </div>
+
+                <div
+                  className={`flex justify-between items-center py-3 px-4 rounded-lg ${
+                    isDark ? "bg-gray-700/50" : "bg-gray-50"
+                  }`}
+                >
+                  <span
+                    className={`font-medium ${
+                      isDark ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Capital Back
+                  </span>
+                  <span className="text-green-500 font-bold flex items-center">
+                    <FaCheck className="w-4 h-4 mr-2" />
+                    Yes
+                  </span>
+                </div>
+
+                <div
+                  className={`flex justify-between items-center py-3 px-4 rounded-lg ${
+                    isDark ? "bg-gray-700/50" : "bg-gray-50"
+                  }`}
+                >
+                  <span
+                    className={`font-medium ${
+                      isDark ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Duration
+                  </span>
+                  <span
+                    className={`font-bold ${
+                      isDark ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    30 Days
+                  </span>
+                </div>
+
+                <div
+                  className={`flex justify-between items-center py-3 px-4 rounded-lg ${
+                    isDark ? "bg-gray-700/50" : "bg-gray-50"
+                  }`}
+                >
+                  <span
+                    className={`font-medium ${
+                      isDark ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Return Type
+                  </span>
+                  <span
+                    className={`font-bold ${
+                      isDark ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    Daily
+                  </span>
+                </div>
+              </div>
+
+              {/* Invest Button */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleInvestNow}
+                className={`w-full py-4 rounded-lg font-bold text-lg transition-all bg-gradient-to-r ${plan.gradient} text-white hover:shadow-lg`}
+              >
+                INVEST NOW
+              </motion.button>
             </motion.div>
-          </motion.div>
-        ))}
+          ))}
+        </motion.div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-16"
+        >
+          <p
+            className={`text-lg mb-6 ${
+              isDark ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            Need help choosing the right plan? Our experts are here to guide
+            you.
+          </p>
+          <button
+            className={`px-8 py-4 rounded-lg font-medium text-lg transition-all ${
+              isDark
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                : "bg-blue-300 hover:bg-blue-600 text-white"
+            }`}
+          >
+            Contact Our Experts
+          </button>
+        </motion.div>
       </div>
     </div>
   );
