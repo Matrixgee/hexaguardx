@@ -97,7 +97,7 @@ const HowItWorks = () => {
   return (
     <div
       className={`w-full py-20 px-4 md:px-10 lg:px-16 ${
-        isDark ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-800"
+        isDark ? "bg-gray-900 text-white" : "bg-blue-50 text-gray-800"
       }`}
     >
       <div className="container mx-auto">
@@ -110,7 +110,7 @@ const HowItWorks = () => {
         >
           <span
             className={`inline-block py-2 px-6 rounded-full text-sm font-medium tracking-wider mb-5 ${
-              isDark ? "bg-blue-600 text-white" : "bg-primary text-white"
+              isDark ? "bg-blue-600 text-white" : "bg-blue-300 text-white"
             }`}
           >
             HOW IT WORKS
@@ -203,7 +203,7 @@ const HowItWorks = () => {
             className={`px-8 py-4 rounded-lg text-white font-medium text-lg transition-all ${
               isDark
                 ? "bg-blue-600 hover:bg-blue-700"
-                : "bg-primary hover:bg-blue-600"
+                : "bg-blue-300 hover:bg-blue-600"
             }`}
           >
             Start Your Journey Now

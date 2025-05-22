@@ -1,24 +1,26 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import toast from "react-hot-toast";
-import Logo from "../assets/skyBig.png";
-import axios from "axios";
+import { useState } from "react";
+import { useTheme } from "../Context/theme";
+import { FiEyeOff } from "react-icons/fi";
+import { BsEye } from "react-icons/bs";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "../config/axiosconig";
 import { Userdata, userToken } from "../Function/Slice";
+import { isAxiosError } from "axios";
 
-const Login: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const url = "https://sk-smoky.vercel.app/api/user/login";
-
+const Login = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,15 +29,17 @@ const Login: React.FC = () => {
       [name]: value,
     });
 
-    // Clear the corresponding error when the user starts typing
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: "",
     }));
   };
 
-  const validate = (): { [key: string]: string } => {
-    const newErrors: { [key: string]: string } = {};
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const validate = () => {
+    const newErrors: { email?: string; password?: string } = {};
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
     return newErrors;
@@ -56,7 +60,7 @@ const Login: React.FC = () => {
     const Toastloading = toast.loading("Please wait...");
 
     try {
-      const response = await axios.post(url, formData);
+      const response = await axios.post("/user/login", formData);
       dispatch(Userdata(response.data.data));
       dispatch(userToken(response.data.token));
       localStorage.setItem("id", response.data.data._id);
@@ -69,7 +73,7 @@ const Login: React.FC = () => {
         }
       }, 3000);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         const errorMsg =
           error.response?.data?.message || "An unexpected error occurred";
         toast.error(errorMsg);
@@ -83,89 +87,153 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-[56rem] bg-[#F8F9F9] flex justify-center gap-5 items-center flex-col phone:h-[60rem]">
-      <ToastContainer />
-      <div className="w-[45%] h-[10%] flex justify-center items-start phone:w-[90%] phone:flex-col phone:px-4 phone:h-[17%] tab:flex-col">
-        <div className="w-[40%] h-[90%] flex justify-center items-center">
-          <img
-            src={Logo}
-            alt="Logo"
-            onClick={() => navigate("/")}
-            className="w-[70%] h-[70%] object-contain cursor-pointer phone:w-[80%] phone:h-[80%]"
-          />
-        </div>
-        <div className="w-[70%] h-[90%] flex justify-center gap-3 items-center phone:w-[90%] smallPhone:w-[100%]">
-          <p className="font-medium">Don't have an account?</p>
-          <button
-            className="Reg-btn w-[25%] h-[70%] bg-blue-500 font-semibold text-gray-100 phone:text-[14px]"
-            onClick={() => navigate("/register")}
-          >
-            Register
-          </button>
-        </div>
-      </div>
-      <form
-        onSubmit={handleSubmit}
-        className="w-[40%] h-[55%] flex justify-around flex-col items-center phone:w-[90%] smallPhone:w-[90%]"
+    <div
+      className={`min-h-screen transition-colors duration-300 flex items-center justify-center py-12 px-4 ${
+        isDark ? "bg-gray-900" : "bg-gray-50"
+      }`}
+    >
+      <div
+        className={`max-w-md w-full space-y-8 p-10 rounded-xl shadow-2xl transition-colors duration-300 ${
+          isDark ? "bg-gray-800" : "bg-white"
+        }`}
       >
-        <div className="w-[80%] h-[10%] flex justify-center items-center phone:h-[15%]">
-          <p className="text-4xl font-bold text-gray-800 phone:text-[27px] smallPhone:text-xl">
+        <div className="flex flex-col items-center">
+          <div
+            className={`h-20 w-20 rounded-full flex items-center justify-center mb-4 ${
+              isDark ? "bg-blue-600" : "bg-blue-500"
+            }`}
+          >
+            <span className="text-white text-2xl font-bold">DS</span>
+          </div>
+          <h2
+            className={`mt-6 text-center text-3xl font-extrabold transition-colors duration-300 ${
+              isDark ? "text-white" : "text-gray-900"
+            }`}
+          >
             Login your account
+          </h2>
+          <p
+            className={`mt-2 text-center text-sm transition-colors duration-300 ${
+              isDark ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            Welcome back to DefiSkyTrading.com
           </p>
         </div>
-        <div className="w-[90%] h-[22%] flex justify-around items-start flex-col">
-          <label htmlFor="email" className="text-lg">
-            E-mail
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter your email"
-            className="w-[100%] h-[52%] px-2 border-blue-500 border-2 outline-none rounded-md"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p className="text-red-500">{errors.email}</p>}
-        </div>
-        <div className="w-[90%] h-[22%] flex justify-around items-start flex-col">
-          <label htmlFor="password" className="text-lg">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter Password"
-            className="w-[100%] h-[52%] px-2 border-blue-500 border-2 outline-none rounded-md"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && <p className="text-red-500">{errors.password}</p>}
-        </div>
-        <div className="w-[90%] h-[27%] flex justify-around flex-col items-center">
-          <div className="w-[100%] h-[29%] flex justify-end cursor-pointer items-center">
-            <p
-              className="text-blue-500 font-semibold"
-              onClick={() => navigate("/forget")}
-            >
-              Forget Password
-            </p>
+
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <div className="space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className={`block text-sm font-medium mb-2 transition-colors duration-300 ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Enter your email"
+                className={`w-full px-3 py-3 border rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDark
+                    ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+                }`}
+                value={formData.email}
+                onChange={handleChange}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className={`block text-sm font-medium mb-2 transition-colors duration-300 ${
+                  isDark ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Enter Password"
+                  className={`w-full px-3 py-3 pr-10 border rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    isDark
+                      ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                      : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
+                  }`}
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+                <button
+                  type="button"
+                  className={`absolute inset-y-0 right-0 pr-3 flex items-center ${
+                    isDark ? "text-gray-400" : "text-gray-600"
+                  }`}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FiEyeOff size={20} /> : <BsEye size={20} />}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
+            </div>
           </div>
-          <div className="w-[100%] h-[60%] flex justify-center items-center">
+
+          <div className="flex items-center justify-between">
+            <div className="text-sm">
+              <p
+                className={`text-sm ${
+                  isDark ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                Already have an account?{" "}
+                <a
+                  href="/auth/register"
+                  className={`font-medium ${
+                    isDark ? "text-purple-400" : "text-blue-500"
+                  } hover:underline`}
+                >
+                  Register
+                </a>
+              </p>
+            </div>
+            <div className="text-sm">
+              <span className="text-blue-500 font-semibold cursor-pointer hover:underline">
+                Forget Password?
+              </span>
+            </div>
+          </div>
+
+          <div>
             <button
-              className="Log-btn w-[90%] h-[60%] bg-blue-500 text-lg font-semibold text-gray-100"
+              type="submit"
               disabled={loading}
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Logging in..." : "Log in"}
             </button>
           </div>
+        </form>
+
+        <div className="text-center">
+          <p
+            className={`text-sm transition-colors duration-300 ${
+              isDark ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
+            Copyright 2023 deficrypto-inv. all rights reserved
+          </p>
         </div>
-      </form>
-      <div className="w-[35%] h-[8%] flex justify-center text-center items-center phone:w-[80%]">
-        <p className="text-lg text-slate-400 font-medium phone:text-[16px]">
-          Copyright 2023 deficrypto-inv. all rights reserved
-        </p>
       </div>
     </div>
   );

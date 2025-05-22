@@ -3,7 +3,7 @@ import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import Home from "../Pages/Home";
 import Policy from "../Pages/Policy";
-import Layout from "../Components/Layout";
+import Layout from "../layouts/Layout";
 import Dashboard from "../Client/Dashboard";
 import Overview from "../Client/Overview";
 import Deposit from "../Client/Deposit";
@@ -35,25 +35,33 @@ import ResetPassword from "../Auth/ResetPassword";
 import Settimg from "../Admin/Settimg";
 import AllInvestment from "../Admin/AllInvestment";
 import Maintance from "../Admin/Maintance";
+import Authlayout from "../layouts/authlayout";
 
 // Define the route objects
 const routes: RouteObject[] = [
   {
-    path: "/login",
-    element: <Login />,
+    path: "auth",
+    element: <Authlayout />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "forget",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "reset",
+        element: <ResetPassword />,
+      },
+    ],
   },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/forget",
-    element: <ForgetPassword />,
-  },
-  {
-    path: "reset",
-    element: <ResetPassword />,
-  },
+
   {
     path: "/",
     element: <Layout />,
