@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { RiMenu4Line, RiCloseLine } from "react-icons/ri";
-import logo from "../assets/singlelogo.png";
+import logo from "../assets/newlog.png";
 import { useTheme } from "../Context/theme";
 
 const Header = () => {
@@ -48,7 +48,7 @@ const Header = () => {
       } text-gray-800 dark:text-white fixed z-50 transition-all duration-300`}
       style={{
         width: "100%",
-        height: "12vh",
+        height: "10vh",
         top: 0,
         left: 0,
       }}
