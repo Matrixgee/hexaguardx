@@ -1,4 +1,4 @@
-import Logo from "../assets/skyBig.png";
+import Logo from "../assets/newlog.png";
 import { BsFacebook, BsTwitter, BsLinkedin, BsInstagram } from "react-icons/bs";
 import { FaTelegramPlane } from "react-icons/fa";
 
@@ -52,7 +52,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Logo and Contact Info */}
           <div className="space-y-6">
-            <div className="w-40 h-auto">
+            <div className="w-40 h-[120px]">
               <img
                 src={Logo}
                 alt="DeFi Sky-Space"
