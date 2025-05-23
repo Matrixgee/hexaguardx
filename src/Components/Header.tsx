@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { RiMenu4Line, RiCloseLine } from "react-icons/ri";
-import logo from "../assets/theLogo.png";
+import logo from "../assets/othermainlogo.png";
 import { useTheme } from "../Context/theme";
 
 const Header = () => {
@@ -43,18 +43,17 @@ const Header = () => {
     <header
       className={`${
         scrolled
-          ? "py-2 bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg"
-          : "py-3 bg-white dark:bg-black"
+          ? "bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg"
+          : "bg-white dark:bg-black"
       } text-gray-800 dark:text-white fixed w-full z-50 transition-all duration-300`}
     >
-      <div className="container mx-auto px-6 lg:px-8 flex items-center justify-between">
+      <div className="w-[100%] h-[12vh]  px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
         <div
-          className="flex items-center"
+          className="w-[30%] h-[100%] max-md:w-[60%]  flex justify-center items-center"
           onClick={() => navigate("/")}
-          role="button"
         >
-          <img src={logo} alt="Logo" className="h-12 object-contain" />
+          <img src={logo} alt="" className="w-[100%] h-[100%] object-cover" />
         </div>
 
         {/* Desktop Navigation */}
