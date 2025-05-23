@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { RiMenu4Line, RiCloseLine } from "react-icons/ri";
-import logo from "../assets/othermainlogo.png";
+import logo from "../assets/singlelogo.png";
 import { useTheme } from "../Context/theme";
 
 const Header = () => {
@@ -45,30 +45,58 @@ const Header = () => {
         scrolled
           ? "bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg"
           : "bg-white dark:bg-black"
-      } text-gray-800 dark:text-white fixed w-full z-50 transition-all duration-300`}
+      } text-gray-800 dark:text-white fixed z-50 transition-all duration-300`}
+      style={{
+        width: "100%",
+        height: "12vh",
+        top: 0,
+        left: 0,
+      }}
     >
-      <div className="w-[100%] h-[12vh]  px-6 lg:px-8 flex items-center justify-between">
+      <div
+        className="flex items-center justify-between px-6 lg:px-8"
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      >
         {/* Logo */}
         <div
-          className="w-[30%] h-[100%] max-md:w-[60%]  flex justify-center items-center"
+          className="flex justify-center  mt-4 items-center cursor-pointer"
+          style={{
+            width: "30%",
+            height: "100%",
+          }}
           onClick={() => navigate("/")}
         >
-          <img src={logo} alt="" className="w-[100%] h-[100%] object-cover" />
+          <img
+            src={logo}
+            alt="Logo"
+            className="object-cover"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-1">
+        <nav className="hidden md:flex items-center">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `px-4 py-2 rounded-lg transition-colors mx-1 ${
+                `rounded-lg transition-colors ${
                   isActive
                     ? "text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-900/30"
                     : "text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`
               }
+              style={{
+                padding: "8px 16px",
+                margin: "0 4px",
+              }}
             >
               {item.label}
             </NavLink>
@@ -76,15 +104,20 @@ const Header = () => {
         </nav>
 
         {/* Action Buttons */}
-        <div className="hidden md:flex items-center space-x-3">
+        <div className="hidden md:flex items-center" style={{ gap: "12px" }}>
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className={`p-2.5 rounded-full transition-colors ${
+            className={`rounded-full transition-colors ${
               isDark
                 ? "bg-gray-800 text-yellow-400 hover:bg-gray-700"
                 : "bg-blue-50 text-blue-600 hover:bg-blue-100"
             }`}
+            style={{
+              padding: "10px",
+              width: "44px",
+              height: "44px",
+            }}
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
           >
             {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
@@ -93,22 +126,31 @@ const Header = () => {
           {/* Get Started Button */}
           <button
             onClick={() => navigate("/auth/login")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium transition-all"
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all"
+            style={{
+              padding: "10px 20px",
+              height: "44px",
+            }}
           >
             Get Started
           </button>
         </div>
 
         {/* Mobile Menu Controls */}
-        <div className="flex md:hidden items-center space-x-2">
+        <div className="flex md:hidden items-center" style={{ gap: "8px" }}>
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className={`p-2 rounded-full ${
+            className={`rounded-full ${
               isDark
                 ? "bg-gray-800 text-yellow-400"
                 : "bg-blue-50 text-blue-600"
             }`}
+            style={{
+              padding: "8px",
+              width: "40px",
+              height: "40px",
+            }}
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
           >
             {isDark ? <FiSun size={18} /> : <FiMoon size={18} />}
@@ -117,11 +159,16 @@ const Header = () => {
           {/* Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`p-2 rounded-lg transition-colors ${
+            className={`rounded-lg transition-colors ${
               mobileMenuOpen
                 ? "bg-gray-200 dark:bg-gray-800"
                 : "text-gray-800 dark:text-gray-200"
             }`}
+            style={{
+              padding: "8px",
+              width: "40px",
+              height: "40px",
+            }}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {mobileMenuOpen ? (
@@ -141,32 +188,53 @@ const Header = () => {
 
       {/* Mobile Menu Dropdown */}
       <div
-        className={`fixed inset-x-0 top-[60px] z-50 transition-all duration-300 transform md:hidden ${
+        className={`fixed z-50 transition-all duration-300 transform md:hidden ${
           mobileMenuOpen
             ? "translate-y-0 opacity-100"
             : "-translate-y-full opacity-0 pointer-events-none"
         }`}
+        style={{
+          left: 0,
+          right: 0,
+          top: "60px",
+        }}
       >
         <div
-          className={`
-          w-full border-t ${isDark ? "border-gray-800" : "border-gray-200"}
-          bg-white dark:bg-gray-900 shadow-xl pb-4 rounded-b-xl
-        `}
+          className={`border-t ${isDark ? "border-gray-800" : "border-gray-200"}
+          bg-white dark:bg-gray-900 shadow-xl rounded-b-xl`}
+          style={{
+            width: "100%",
+            paddingBottom: "16px",
+          }}
         >
-          <div className="container mx-auto px-6 pt-4 flex flex-col">
+          <div
+            className="flex flex-col"
+            style={{
+              padding: "16px 24px 0",
+            }}
+          >
             {/* Nav Links */}
-            <div className="flex flex-col space-y-1 mb-4">
+            <div
+              className="flex flex-col"
+              style={{
+                gap: "4px",
+                marginBottom: "16px",
+              }}
+            >
               {navItems.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
                   className={({ isActive }) =>
-                    `px-4 py-3 rounded-lg ${
+                    `rounded-lg ${
                       isActive
                         ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium"
                         : "text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                     }`
                   }
+                  style={{
+                    padding: "12px 16px",
+                  }}
                 >
                   {item.label}
                 </NavLink>
@@ -176,7 +244,12 @@ const Header = () => {
             {/* CTA Button */}
             <button
               onClick={() => navigate("/auth/login")}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg font-medium transition-all mb-2"
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all"
+              style={{
+                width: "100%",
+                padding: "12px 20px",
+                marginBottom: "8px",
+              }}
             >
               Get Started
             </button>
