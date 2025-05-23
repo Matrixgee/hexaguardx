@@ -36,6 +36,7 @@ import Settimg from "../Admin/Settimg";
 import AllInvestment from "../Admin/AllInvestment";
 import Maintance from "../Admin/Maintance";
 import Authlayout from "../layouts/authlayout";
+import ContactUs from "../Pages/contact";
 
 // Define the route objects
 const routes: RouteObject[] = [
@@ -81,6 +82,10 @@ const routes: RouteObject[] = [
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "contact",
+        element: <ContactUs />,
       },
     ],
   },
