@@ -4,7 +4,7 @@ import Register from "../Auth/Register";
 import Home from "../Pages/Home";
 import Policy from "../Pages/Policy";
 import Layout from "../layouts/Layout";
-import Dashboard from "../Client/Dashboard";
+
 import Overview from "../Client/Overview";
 import Deposit from "../Client/Deposit";
 import Myplans from "../Client/Myplans";
@@ -37,6 +37,7 @@ import AllInvestment from "../Admin/AllInvestment";
 import Maintance from "../Admin/Maintance";
 import Authlayout from "../layouts/authlayout";
 import ContactUs from "../Pages/contact";
+import Dashboard from "../layouts/userlayouts";
 
 // Define the route objects
 const routes: RouteObject[] = [

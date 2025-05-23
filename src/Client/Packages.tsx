@@ -19,7 +19,7 @@ const Packages: React.FC = () => {
     const getAllPlans = async () => {
       try {
         const response = await axios.get(
-          "https://sk-yzt3.onrender.com/api/user/getAllPlans"
+          "https://hexg.onrender.com/api/user/getAllPlans"
         );
         dispatch(setPlan(response.data));
         setLoading(false);
@@ -45,7 +45,7 @@ const Packages: React.FC = () => {
     const loadingToast = toast.loading("Joining plan...");
     try {
       const response = await axios.post(
-        `https://sk-smoky.vercel.app/api/user/invest/${userId}`,
+        `https://hexg.onrender.com/api/user/invest/${userId}`,
         {
           planName: plan.planName,
           amount,

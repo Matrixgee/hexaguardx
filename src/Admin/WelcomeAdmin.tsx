@@ -14,7 +14,7 @@ const WelcomeAdmin = () => {
 
   const [loading, setloading] = useState(false);
 
-  const url = "https://sk-smoky.vercel.app/api/admin/AdminDashboard";
+  const url = "https://hexg.onrender.com/api/admin/AdminDashboard";
 
   const HandlegetDashboard = async () => {
     setloading(true);

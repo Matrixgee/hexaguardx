@@ -6,30 +6,32 @@ import { useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const userToken = useSelector((state:any)=>state.user.token)
+  const [email, setEmail] = useState("");
+  const userToken = useSelector((state: any) => state.user.token);
   console.log(userToken);
-  
 
-  const url = 'https://sk-smoky.vercel.app/api/user/forgotPass';
-  const headers = 
-  {
-    Authorization: `Bearer ${userToken}`
-  }
+  const url = "https://hexg.onrender.com/api/user/forgotPass";
+  const headers = {
+    Authorization: `Bearer ${userToken}`,
+  };
 
   const forgetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const toastloading = toast.loading('Please wait....');
+    const toastloading = toast.loading("Please wait....");
 
     try {
-      const response = await axios.post(url, { email },{headers});
+      const response = await axios.post(url, { email }, { headers });
       toast.dismiss(toastloading);
-      toast.success(response.data.message || "Password reset link sent successfully");
-      setEmail('');
+      toast.success(
+        response.data.message || "Password reset link sent successfully"
+      );
+      setEmail("");
     } catch (error: any) {
       toast.dismiss(toastloading);
-      toast.error(error.response?.data?.message || "An error occurred. Please try again.");
+      toast.error(
+        error.response?.data?.message || "An error occurred. Please try again."
+      );
     }
   };
 
@@ -40,28 +42,46 @@ const ForgetPassword = () => {
           <p className="font-bold text-3xl text-blue-600">Password Reset</p>
         </div>
         <div className="w-[100%] h-[50%] flex justify-around items-center">
-          <form className="w-[100%] h-[100%] flex justify-center flex-col items-center" onSubmit={forgetPassword}>
+          <form
+            className="w-[100%] h-[100%] flex justify-center flex-col items-center"
+            onSubmit={forgetPassword}
+          >
             <div className="w-[90%] h-[60%] gap-2 px-1 flex justify-center items-start flex-col">
-              <label className="font-bold text-blue-500">Your Email <span className="text-red-600">*</span></label>
-              <input 
-                type="email" 
-                placeholder="" 
-                className="forgetinput py-3 outline-none border-2 px-16 rounded-md" 
+              <label className="font-bold text-blue-500">
+                Your Email <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="email"
+                placeholder=""
+                className="forgetinput py-3 outline-none border-2 px-16 rounded-md"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="w-full h-[40%] flex justify-center items-center">
-              <button type="submit" className="py-3 transition-all duration-300 hover:bg-blue-500 text-white font-semibold px-6 rounded-md bg-blue-700">
+              <button
+                type="submit"
+                className="py-3 transition-all duration-300 hover:bg-blue-500 text-white font-semibold px-6 rounded-md bg-blue-700"
+              >
                 Email Password Reset Link
               </button>
             </div>
           </form>
         </div>
         <div className="w-full h-[25%] flex flex-col items-center justify-around px-6">
-          <p>Repeat Login? <span className="text-slate-600 font-bold cursor-pointer" onClick={() => navigate('/login')}>Login</span></p>
-          <p className="text-slate-400 phone:text-sm text-center">© Copyright 2024 DefiSkySpace All Rights Reserved.</p>
+          <p>
+            Repeat Login?{" "}
+            <span
+              className="text-slate-600 font-bold cursor-pointer"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </span>
+          </p>
+          <p className="text-slate-400 phone:text-sm text-center">
+            © Copyright 2024 DefiSkySpace All Rights Reserved.
+          </p>
         </div>
       </div>
     </div>

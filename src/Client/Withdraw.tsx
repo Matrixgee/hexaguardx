@@ -14,7 +14,7 @@ const Withdraw = () => {
   const userToken = useSelector((state: any) => state.user.token);
   const navigate = useNavigate();
   const userId = localStorage.getItem("id");
-  const url = `https://sk-yzt3.onrender.com/api/user/withdraw/${userId}`;
+  const url = `https://hexg.onrender.com/api/user/withdraw/${userId}`;
 
   const headers = {
     Authorization: `Bearer ${userToken}`,

@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import store from "./Function/Store.tsx";
 import { ThemeProvider } from "./Context/theme.tsx";
+import "./styles/custom.scss";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

@@ -40,7 +40,7 @@ const AdminDeposit = () => {
   };
 
   const getAllTransactions = async () => {
-    const url = "https://sk-yzt3.onrender.com/api/admin/allTransactions";
+    const url = "https://hexg.onrender.com/api/admin/allTransactions";
     try {
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${userToken}` },
@@ -61,7 +61,7 @@ const AdminDeposit = () => {
   }, [dispatch, userToken]);
 
   const confirmDeposit = async (transactionId: string) => {
-    const confirmUrl = `https://sk-yzt3.onrender.com/api/admin/approveDeposit/${transactionId}`;
+    const confirmUrl = `https://hexg.onrender.com/api/admin/approveDeposit/${transactionId}`;
     try {
       await axios.put(
         confirmUrl,
@@ -81,7 +81,7 @@ const AdminDeposit = () => {
   };
 
   const handleDecline = async (transactionId: string) => {
-    const declineUrl = `https://sk-yzt3.onrender.com/api/admin/declineDeposit/${transactionId}`;
+    const declineUrl = `https://hexg.onrender.com/api/admin/declineDeposit/${transactionId}`;
     try {
       await axios.put(
         declineUrl,

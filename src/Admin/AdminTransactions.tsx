@@ -40,7 +40,7 @@
 //     }, []);
 
 //     const getAllTransactions = async () => {
-//         const url = 'https://sk-yzt3.onrender.com/api/admin/allTransactions';
+//         const url = 'https://hexg.onrender.com/api/admin/allTransactions';
 //         const headers = { Authorization: `Bearer ${userToken}` };
 //         try {
 //             const response = await axios.get(url, { headers });
@@ -83,7 +83,7 @@
 //         if (!selectedItemId) return;
 //         const toastLoadingId = toast.loading("Please wait...");
 //         setLoading(true);
-//         const url = `https://sk-yzt3.onrender.com/api/admin/approveDeposit/${selectedItemId}`;
+//         const url = `https://hexg.onrender.com/api/admin/approveDeposit/${selectedItemId}`;
 //         const headers = { Authorization: `Bearer ${userToken}` };
 //         axios.put(url, {}, { headers })
 //             .then((response) => {
@@ -104,7 +104,7 @@
 //     const handleDecline = () => {
 //         const toastLoadingId = toast.loading("Please wait...");
 //         setLoading(true);
-//         const url = `https://sk-yzt3.onrender.com/api/admin/declineDeposit/${selectedItemId}`;
+//         const url = `https://hexg.onrender.com/api/admin/declineDeposit/${selectedItemId}`;
 //         const headers = { Authorization: `Bearer ${userToken}` };
 //         axios.put(url, {}, { headers })
 //             .then((response) => {
@@ -182,9 +182,9 @@
 //                                                         : ""
 //                                                 }`}
 //                                             >
-//                                               {item.status}  
+//                                               {item.status}
 //                                             </p>
-                                            
+
 //                                         </div>
 //                                         <div className="w-[10.5rem] h-full flex items-center text-sm text-[rgb(83,104,128)] font-semibold">
 //                                         {new Date(item?.createdAt).toLocaleDateString()}

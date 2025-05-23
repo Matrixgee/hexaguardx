@@ -7,7 +7,7 @@ import { AdminInvestmentPlan } from "../Function/Slice";
 import ConfirmActionModal from "../Components/ConfirmActionModal";
 
 const AllInvestment = () => {
-  const url = "https://sk-yzt3.onrender.com/api/admin/allInvestments";
+  const url = "https://hexg.onrender.com/api/admin/allInvestments";
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [investments, setInvestments] = useState([]);
@@ -34,7 +34,7 @@ const AllInvestment = () => {
     const toastloadingId = "please wait.....";
     try {
       const response = await axios.delete(
-        `https://sk-yzt3.onrender.com/api/admin/deleteInvestment/${id}`,
+        `https://hexg.onrender.com/api/admin/deleteInvestment/${id}`,
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -56,7 +56,7 @@ const AllInvestment = () => {
     const toastloadingId = "please wait.....";
     try {
       const response = await axios.put(
-        `https://sk-yzt3.onrender.com/api/admin/refundInvestment/${id}`,
+        `https://hexg.onrender.com/api/admin/refundInvestment/${id}`,
         {},
         {
           headers: {
@@ -97,7 +97,7 @@ const AllInvestment = () => {
     const toastloadingId = "please wait....";
     try {
       const response = await axios.put(
-        `https://sk-yzt3.onrender.com/api/admin/updateInvestment/${selectedInvestment._id}`,
+        `https://hexg.onrender.com/api/admin/updateInvestment/${selectedInvestment._id}`,
         editForm,
         {
           headers: {

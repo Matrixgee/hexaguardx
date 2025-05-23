@@ -16,7 +16,11 @@ interface RootState {
   };
 }
 
-const CreditDebitModal: React.FC<CreditDebitModalProps> = ({ isOpen, onClose, _id }) => {
+const CreditDebitModal: React.FC<CreditDebitModalProps> = ({
+  isOpen,
+  onClose,
+  _id,
+}) => {
   const [amount, setAmount] = useState<number | undefined>();
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("");
@@ -37,7 +41,12 @@ const CreditDebitModal: React.FC<CreditDebitModalProps> = ({ isOpen, onClose, _i
   };
 
   const handleCreditDebitUser = async () => {
-    if (!amount || !selectedOption || !selectedType || (selectedType !== "credit" && selectedType !== "debit")) {
+    if (
+      !amount ||
+      !selectedOption ||
+      !selectedType ||
+      (selectedType !== "credit" && selectedType !== "debit")
+    ) {
       alert("All fields are required");
       return;
     }
@@ -50,7 +59,7 @@ const CreditDebitModal: React.FC<CreditDebitModalProps> = ({ isOpen, onClose, _i
     const toastLoadingId = toast.loading("Please wait...");
     setCreditLoading(true);
     try {
-      const url = `https://sk-yzt3.onrender.com/api/admin/creditOrDebit/${_id}`;
+      const url = `https://hexg.onrender.com/api/admin/creditOrDebit/${_id}`;
       const token = userToken;
       const headers = {
         Authorization: `Bearer ${token}`,

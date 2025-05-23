@@ -11,7 +11,7 @@ const AdminWithdraw = () => {
   const fetchWithdrawals = async () => {
     try {
       const response = await axios.get(
-        "https://sk-yzt3.onrender.com/api/admin/getWithdrawals",
+        "https://hexg.onrender.com/api/admin/getWithdrawals",
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -33,7 +33,7 @@ const AdminWithdraw = () => {
 
     try {
       const response = await axios.put(
-        `https://sk-yzt3.onrender.com/api/admin/approveWithdrawal/${_id}`,
+        `https://hexg.onrender.com/api/admin/approveWithdrawal/${_id}`,
         { status },
         {
           headers: {
