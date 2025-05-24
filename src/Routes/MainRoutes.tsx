@@ -38,6 +38,7 @@ import Maintance from "../Admin/Maintance";
 import Authlayout from "../layouts/authlayout";
 import ContactUs from "../Pages/contact";
 import Dashboard from "../layouts/userlayouts";
+import ScrollToTop from "../Components/Scrolltotop";
 
 // Define the route objects
 const routes: RouteObject[] = [
@@ -66,7 +67,12 @@ const routes: RouteObject[] = [
 
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <>
+        <ScrollToTop />,
+        <Layout />,
+      </>
+    ),
     children: [
       {
         path: "",
