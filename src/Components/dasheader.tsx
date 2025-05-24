@@ -1,35 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useRef } from "react";
-import { Modal } from "antd";
-import { FaRegBell, FaCaretDown } from "react-icons/fa";
-import { PiSignOut, PiGearSix } from "react-icons/pi";
-import { FaCircleUser } from "react-icons/fa6";
-import { AiOutlineUser } from "react-icons/ai";
-import { motion, AnimatePresence } from "framer-motion";
-
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  Bell,
+  ChevronDown,
+  LogOut,
+  Settings,
+  User,
+  Menu,
+  ArrowDownToLine,
+  ArrowUpFromLine,
+} from "lucide-react";
+import "./header.css";
 import { clearUser } from "../Function/Slice";
-import { MdOutlineMenu } from "react-icons/md";
-import { useTheme } from "../Context/theme";
-import { FiMoon, FiSun } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-interface UserHedeprops {
+interface UserHeaderProps {
   active: boolean;
   setActive: (active: boolean) => void;
 }
 
-const UserHeader: React.FC<UserHedeprops> = ({ active, setActive }) => {
+const UserHeader: React.FC<UserHeaderProps> = ({ active, setActive }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [userImage, setUserImage] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigate = useNavigate();
+  const [notifications] = useState(3); // Mock notification count
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
-
-  const user = useSelector((state: any) => state.user.user);
+  // Mock user data - replace with your actual user selector
+  const user = useSelector((state: any) => state.user.user.user);
 
   const handleShowMenu = () => {
     setShowMenu(!showMenu);
@@ -64,156 +66,183 @@ const UserHeader: React.FC<UserHedeprops> = ({ active, setActive }) => {
   const handleLogout = () => {
     dispatch(clearUser());
     navigate("/auth/login");
+    console.log("Logout clicked");
   };
 
   const handleMenubar = () => {
     setActive(!active);
-    // console.log(active);
+  };
+
+  const handleNavigation = (path: string) => {
+    // navigate(path);
+    console.log(`Navigate to: ${path}`);
   };
 
   const menuItems = [
     {
       label: "My Profile",
-      icon: <AiOutlineUser className="text-2xl" />,
+      icon: <User className="w-5 h-5" />,
       path: "account/profile",
     },
     {
       label: "Settings",
-      icon: <PiGearSix className="text-2xl" />,
+      icon: <Settings className="w-5 h-5" />,
       path: "account/security",
     },
     {
       label: "Notifications",
-      icon: <FaRegBell className="text-2xl" />,
+      icon: <Bell className="w-5 h-5" />,
       path: "/user/overview",
       mobileOnly: true,
     },
   ];
 
   return (
-    <div className="w-[100%] h-[12%] bg-[#ffff] border-gray-100 border-b-2 justify-between flex max-md:h-[10%] max-md:px-7">
-      <div className="menu_bar w-[20%] h-[90%]">
-        <MdOutlineMenu className=" text-4xl" onClick={handleMenubar} />
+    <div className="header-container">
+      {/* Animated background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-purple-900/20 to-slate-900/95 backdrop-blur-xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-purple-500/5"></div>
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-2 left-20 w-16 h-16 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute top-4 right-32 w-12 h-12 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
       </div>
-      <div className="w-[30%] h-[100%] flex justify-around items-center max-md:hidden">
-        <button
-          className="w-[40%] h-[57%] bg-yellow-500 rounded-md text-white"
-          onClick={() => navigate("/user/deposit")}
-        >
-          Fund Account
-        </button>
-        <button
-          className="w-[40%] h-[57%] bg-red-500 rounded-md text-white"
-          onClick={() => navigate("/user/withdraw")}
-        >
-          Withdraw Funds
-        </button>
-      </div>
-      <div className="w-[37%] h-[100%] flex justify-center items-center max-md:w-[50%] max-md:justify-around">
-        <div className="w-[60%] h-[100%] flex justify-center gap-6 items-center max-md:w-[90%]">
-          <div className="w-[40px] h-[40px] bg-slate-200 rounded-full flex justify-center items-center max-md:hidden">
-            <FaRegBell className="text-2xl" />
-          </div>
-          <div className="w-[60%] h-[50%] flex justify-around items-center max-md:w-[80%]">
-            <div
-              className="w-[40px] h-[40px] bg-slate-300 border rounded-full flex justify-center items-center cursor-pointer max-md:w-[50px] max-md:h-[50px]"
-              onClick={handleUserIconClick}
-            >
-              {userImage ? (
-                <img
-                  src={userImage}
-                  alt="User"
-                  className="w-full h-full rounded-full object-cover"
-                />
-              ) : (
-                <FaCircleUser className="text-5xl" />
-              )}
+
+      <div className="header-content">
+        {/* Left Section - Menu Button */}
+        <div className="menu-section">
+          <button className="menu-button" onClick={handleMenubar}>
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Center Section - Action Buttons (Desktop) */}
+        <div className="action-buttons">
+          <button
+            className="fund-button"
+            onClick={() => handleNavigation("/user/deposit")}
+          >
+            <div className="button-content">
+              <ArrowDownToLine className="w-4 h-4" />
+              <span>Fund Account</span>
             </div>
-            <input
-              type="file"
-              ref={fileInputRef}
-              className="hidden"
-              onChange={handleFileChange}
-              accept="image/*"
-            />
-            <div className="font-semibold phone:hidden smallPhone:hidden text-slate-500 cursor-pointer">
-              {user?.firstName}
+          </button>
+          <button
+            className="withdraw-button"
+            onClick={() => handleNavigation("/user/withdraw")}
+          >
+            <div className="button-content">
+              <ArrowUpFromLine className="w-4 h-4" />
+              <span>Withdraw Funds</span>
             </div>
-            <div
-              className="hidden md:flex items-center"
-              style={{ gap: "12px" }}
-            >
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className={`rounded-full transition-colors ${
-                  isDark
-                    ? "bg-gray-800 text-yellow-400 hover:bg-gray-700"
-                    : "bg-blue-50 text-blue-600 hover:bg-blue-100"
-                }`}
-                style={{
-                  padding: "10px",
-                  width: "44px",
-                  height: "44px",
-                }}
-                aria-label={
-                  isDark ? "Switch to light mode" : "Switch to dark mode"
-                }
-              >
-                {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
+          </button>
+        </div>
+
+        {/* Right Section - User Controls */}
+        <div className="user-section">
+          <div className="user-controls">
+            {/* Notifications (Desktop) */}
+            <div className="notification-wrapper">
+              <button className="notification-button">
+                <Bell className="w-5 h-5" />
+                {notifications > 0 && (
+                  <span className="notification-badge">{notifications}</span>
+                )}
               </button>
             </div>
-            <div className="w-[10%] h-[40%] flex relative justify-center items-center phone:w-[90%]">
-              <FaCaretDown
-                className="text-2xl cursor-pointer text-slate-500"
-                onClick={handleShowMenu}
-              />
-              <AnimatePresence>
-                {showMenu && (
-                  <motion.div
-                    className="dropDown-dashboard w-[15rem] h-[13rem] flex justify-around items-start px-4 flex-col bg-white shadow-md absolute top-11 right-[-20%] z-40"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {menuItems.map((item, index) => (
-                      <div
-                        key={index}
-                        className={`w-[90%] h-[20%] gap-3 rounded-md transition-all transform duration-300 cursor-pointer px-5 flex justify-start items-center hover:bg-[#CCCCCC] ${
-                          item.mobileOnly ? "hidden phone:flex" : ""
-                        }`}
-                        onClick={() => {
-                          setShowMenu(false);
-                          navigate(item.path);
-                        }}
-                      >
-                        {item.icon}
-                        <p className="text-xl">{item.label}</p>
-                      </div>
-                    ))}
-                    <div
-                      className="w-[90%] h-[20%] gap-3 rounded-md mb-2 transition-all transform duration-300 cursor-pointer px-5 flex justify-start items-center hover:bg-[#CCCCCC]"
-                      onClick={handleLogout}
-                    >
-                      <PiSignOut className="text-2xl" />
-                      <p className="text-xl">Log Out</p>
-                    </div>
-                  </motion.div>
+
+            {/* User Profile */}
+            <div className="user-profile">
+              <button className="avatar-button" onClick={handleUserIconClick}>
+                {userImage ? (
+                  <img src={userImage} alt="User" className="avatar-image" />
+                ) : (
+                  <div className="avatar-placeholder">
+                    <User className="w-5 h-5" />
+                  </div>
                 )}
-              </AnimatePresence>
+              </button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                onChange={handleFileChange}
+                accept="image/*"
+              />
+
+              <div className="user-name">
+                <span>{user?.firstName}</span>
+              </div>
+
+              <div className="dropdown-wrapper">
+                <button className="dropdown-trigger" onClick={handleShowMenu}>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      showMenu ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                {showMenu && (
+                  <div className="dropdown-menu">
+                    <div className="dropdown-content">
+                      {menuItems.map((item, index) => (
+                        <button
+                          key={index}
+                          className={`dropdown-item ${
+                            item.mobileOnly ? "mobile-only" : ""
+                          }`}
+                          onClick={() => {
+                            setShowMenu(false);
+                            handleNavigation(item.path);
+                          }}
+                        >
+                          <span className="dropdown-icon">{item.icon}</span>
+                          <span className="dropdown-label">{item.label}</span>
+                        </button>
+                      ))}
+                      <div className="dropdown-divider"></div>
+                      <button
+                        className="dropdown-item logout-item"
+                        onClick={handleLogout}
+                      >
+                        <span className="dropdown-icon">
+                          <LogOut className="w-5 h-5" />
+                        </span>
+                        <span className="dropdown-label">Log Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <Modal
-        title="Add Image"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <p>Do you want to add an image?</p>
-      </Modal>
+
+      {/* Modal */}
+      {isModalVisible && (
+        <div className="modal-overlay" onClick={handleCancel}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3 className="modal-title">Add Profile Image</h3>
+            </div>
+            <div className="modal-body">
+              <p className="modal-text">Do you want to add a profile image?</p>
+            </div>
+            <div className="modal-footer">
+              <button className="modal-cancel" onClick={handleCancel}>
+                Cancel
+              </button>
+              <button className="modal-ok" onClick={handleOk}>
+                Choose Image
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

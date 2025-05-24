@@ -3,11 +3,12 @@ import { useTheme } from "../Context/theme";
 import { FiEyeOff } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "../config/axiosconig";
 import { Userdata, userToken } from "../Function/Slice";
 import { isAxiosError } from "axios";
+import logo from "../assets/newlog.png";
 
 const Login = () => {
   const { theme } = useTheme();
@@ -100,10 +101,12 @@ const Login = () => {
         <div className="flex flex-col items-center">
           <div
             className={`h-20 w-20 rounded-full flex items-center justify-center mb-4 ${
-              isDark ? "bg-blue-600" : "bg-blue-500"
+              isDark ? "bg-white" : "bg-blue-500"
             }`}
           >
-            <span className="text-white text-2xl font-bold">DS</span>
+            <span className="text-white text-2xl font-bold">
+              <img src={logo} alt="logo" />
+            </span>
           </div>
           <h2
             className={`mt-6 text-center text-3xl font-extrabold transition-colors duration-300 ${
@@ -117,7 +120,7 @@ const Login = () => {
               isDark ? "text-gray-300" : "text-gray-600"
             }`}
           >
-            Welcome back to DefiSkyTrading.com
+            Welcome back to HexaGuard.com
           </p>
         </div>
 
@@ -197,14 +200,14 @@ const Login = () => {
                 }`}
               >
                 Already have an account?{" "}
-                <a
-                  href="/auth/register"
+                <Link
+                  to="/auth/register"
                   className={`font-medium ${
-                    isDark ? "text-purple-400" : "text-blue-500"
+                    isDark ? "text-blue-400" : "text-blue-500"
                   } hover:underline`}
                 >
                   Register
-                </a>
+                </Link>
               </p>
             </div>
             <div className="text-sm">

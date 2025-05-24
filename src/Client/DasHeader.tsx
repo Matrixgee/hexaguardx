@@ -19,7 +19,6 @@ const DasHeader: React.FC = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state: any) => state.user.user);
-  
 
   const handleShowMenu = () => {
     setShowMenu(!showMenu);
@@ -53,16 +52,27 @@ const DasHeader: React.FC = () => {
 
   const handleLogout = () => {
     dispatch(clearUser());
-    navigate("/login");
-  
+    navigate("/auth/login");
   };
 
   const menuItems = [
-    { label: "My Profile", icon: <AiOutlineUser className="text-2xl" />, path: "account/profile" },
-    { label: "Settings", icon: <PiGearSix className="text-2xl" />, path: "account/security" },
-    { label: "Notifications", icon: <FaRegBell className="text-2xl" />, path: "/user/overview", mobileOnly: true },
+    {
+      label: "My Profile",
+      icon: <AiOutlineUser className="text-2xl" />,
+      path: "account/profile",
+    },
+    {
+      label: "Settings",
+      icon: <PiGearSix className="text-2xl" />,
+      path: "account/security",
+    },
+    {
+      label: "Notifications",
+      icon: <FaRegBell className="text-2xl" />,
+      path: "/user/overview",
+      mobileOnly: true,
+    },
   ];
-
 
   // const getTransactionDetails = () => {
   //   if (!gateway || !selectedPaymentMethod) return null;
@@ -74,14 +84,13 @@ const DasHeader: React.FC = () => {
   // };
   // const transactionDetails = getTransactionDetails();
 
-
-// <div>
-//  <p className="text-[18px] text-gray-600 font-semibold text-center">
-// //                 Please proceed with your payment of ${amount} to the wallet address below.
-// //               </p>
-//             </div>
-// </div>
-//    */}
+  // <div>
+  //  <p className="text-[18px] text-gray-600 font-semibold text-center">
+  // //                 Please proceed with your payment of ${amount} to the wallet address below.
+  // //               </p>
+  //             </div>
+  // </div>
+  //    */}
 
   return (
     <div className="w-[100%] h-[12%] bg-[#ffff] border-gray-100 border-b-2 justify-between flex phone:h-[10%]">
@@ -89,8 +98,18 @@ const DasHeader: React.FC = () => {
         <MobileMenu />
       </div>
       <div className="w-[30%] h-[100%] flex justify-around items-center phone:hidden">
-        <button className="w-[40%] h-[57%] bg-yellow-500 rounded-md text-white" onClick={()=>navigate('/user/deposit')}>Fund Account</button>
-        <button className="w-[40%] h-[57%] bg-red-500 rounded-md text-white" onClick={()=>navigate('/user/withdraw')}>Withdraw Funds</button>
+        <button
+          className="w-[40%] h-[57%] bg-yellow-500 rounded-md text-white"
+          onClick={() => navigate("/user/deposit")}
+        >
+          Fund Account
+        </button>
+        <button
+          className="w-[40%] h-[57%] bg-red-500 rounded-md text-white"
+          onClick={() => navigate("/user/withdraw")}
+        >
+          Withdraw Funds
+        </button>
       </div>
       <div className="w-[37%] h-[100%] flex justify-center items-center phone:w-[36%] phone:justify-around">
         <div className="w-[60%] h-[100%] flex justify-center gap-6 items-center phone:w-[90%]">
@@ -139,7 +158,9 @@ const DasHeader: React.FC = () => {
                     {menuItems.map((item, index) => (
                       <div
                         key={index}
-                        className={`w-[90%] h-[20%] gap-3 rounded-md transition-all transform duration-300 cursor-pointer px-5 flex justify-start items-center hover:bg-[#CCCCCC] ${item.mobileOnly ? "hidden phone:flex" : ""}`}
+                        className={`w-[90%] h-[20%] gap-3 rounded-md transition-all transform duration-300 cursor-pointer px-5 flex justify-start items-center hover:bg-[#CCCCCC] ${
+                          item.mobileOnly ? "hidden phone:flex" : ""
+                        }`}
                         onClick={() => {
                           setShowMenu(false);
                           navigate(item.path);

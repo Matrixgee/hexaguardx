@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import axios from "../config/axiosconig";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
+import logo from "../assets/newlog.png";
 
 const SignUp = () => {
   const { theme } = useTheme();
@@ -115,13 +116,13 @@ const SignUp = () => {
         <div className="p-8 sm:p-10">
           <div className="flex flex-col items-center mb-8">
             <div
-              className={`h-24 w-24 rounded-full flex items-center justify-center mb-4 shadow-lg ${
-                isDark
-                  ? "bg-gradient-to-br from-purple-600 to-blue-600"
-                  : "bg-gradient-to-br from-blue-500 to-purple-500"
+              className={`h-20 w-20 rounded-full flex items-center justify-center mb-4 ${
+                isDark ? "bg-white" : "bg-blue-500"
               }`}
             >
-              <span className="text-white text-3xl font-bold">DS</span>
+              <span className="text-white text-2xl font-bold">
+                <img src={logo} alt="logo" />
+              </span>
             </div>
             <h2
               className={`text-center text-3xl font-bold mb-2 ${

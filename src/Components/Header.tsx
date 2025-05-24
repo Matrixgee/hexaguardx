@@ -62,7 +62,7 @@ const Header = () => {
       >
         {/* Logo */}
         <div
-          className="flex justify-center  mt-4 items-center cursor-pointer"
+          className="flex justify-center items-center cursor-pointer"
           style={{
             width: "30%",
             height: "100%",
@@ -74,8 +74,8 @@ const Header = () => {
             alt="Logo"
             className="object-cover"
             style={{
-              width: "100%",
-              height: "100%",
+              width: "70%",
+              height: "70%",
             }}
           />
         </div>
