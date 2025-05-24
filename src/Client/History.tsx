@@ -20,7 +20,7 @@ const History: React.FC = () => {
     useSelector((state: any) => state.user.userTransactions) || [];
 
   const getHistory = async () => {
-    const url = "https://sk-smoky.vercel.app/api/user/history";
+    const url = "https://hexg.onrender.com/api/user/history";
     const headers = {
       Authorization: `Bearer ${userToken}`,
     };

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 
-import logo from "./assets/singlelogo.png";
+import logo from "./assets/newlog.png";
 import { MainRoutes } from "./Routes/MainRoutes";
 
 const App = () => {
