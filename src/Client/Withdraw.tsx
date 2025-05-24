@@ -140,7 +140,9 @@ const Withdraw = () => {
             {cryptoOptions.map((crypto) => (
               <div
                 key={crypto.value}
-                onClick={() => setPaymentMethod(crypto.value)}
+                onClick={() =>
+                  setPaymentMethod(crypto.value as "btc" | "eth" | "usdt")
+                }
                 className={`relative p-4 rounded-xl cursor-pointer transition-all duration-300 border-2 ${
                   paymentMethod === crypto.value
                     ? "border-purple-400 bg-white/20 shadow-lg shadow-purple-500/20"
