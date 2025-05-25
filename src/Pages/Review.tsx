@@ -16,7 +16,7 @@ const Review: React.FC = () => {
         </h2>
         <p className="mb-4">Your registration was successful!</p>
         <p className="mb-4">
-          We are excited to welcome you to the DefiSkySpace Crypto community.
+          We are excited to welcome you to the HexaGuard Crypto community.
         </p>
         <p className="mb-4">
           You will be able to access your account soon once you are confirmed,
@@ -25,11 +25,11 @@ const Review: React.FC = () => {
         <p className="mb-4">
           If you need any help, do not hesitate to reach out to us on the Live
           Chat Support System or email us at{" "}
-          <a href="mailto:defiskyspace@gmail.com" className="text-blue-500">
-            defiskyspace@gmail.com
+          <a href="mailto:HexaGuard@gmail.com" className="text-blue-500">
+            HexaGuard@gmail.com
           </a>
         </p>
-        <p className="font-semibold">Kind Regards, DefiSkySpace</p>
+        <p className="font-semibold">Kind Regards, HexaGuard</p>
         <button
           onClick={handleBackToLogin}
           className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
@@ -37,7 +37,7 @@ const Review: React.FC = () => {
           Back to Login
         </button>
         <p className="mt-8 text-sm text-gray-500">
-          © Copyright 2024 DefiSkySpace All Rights Reserved
+          © Copyright 2024 HexaGuard All Rights Reserved
         </p>
       </div>
     </div>

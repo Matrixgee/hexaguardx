@@ -63,10 +63,10 @@ const Footer = () => {
               <h3 className="font-bold text-lg">Location to HQ</h3>
               <p className="text-gray-400">23 Valley Lane, Austin</p>
               <a
-                href="mailto:defiskyspace@gmail.com"
+                href="mailto:HexaGuard@gmail.com"
                 className="text-gray-400 hover:text-blue-400 transition-colors"
               >
-                defiskyspace@gmail.com
+                HexaGuard@gmail.com
               </a>
             </div>
           </div>

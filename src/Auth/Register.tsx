@@ -119,6 +119,7 @@ const SignUp = () => {
               className={`h-20 w-20 rounded-full flex items-center justify-center mb-4 ${
                 isDark ? "bg-white" : "bg-blue-500"
               }`}
+              onClick={() => navigate("/")}
             >
               <span className="text-white text-2xl font-bold">
                 <img src={logo} alt="logo" />

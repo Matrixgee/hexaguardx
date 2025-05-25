@@ -15,7 +15,7 @@ const Testimonials = () => {
       image: Bob,
       role: "Cryptocurrency Investor",
       quote:
-        "I began investing in cryptocurrency in 2017, and at that time, I would rate my knowledge level as a 4 out of 10. However, I have since acquired a solid understanding of the fundamentals, and thanks to my investments with DefiSkySpace, I have already made over 11 million. This sets me apart from several of my friends who chose to invest their money elsewhere.",
+        "I began investing in cryptocurrency in 2017, and at that time, I would rate my knowledge level as a 4 out of 10. However, I have since acquired a solid understanding of the fundamentals, and thanks to my investments with HexaGuard, I have already made over 11 million. This sets me apart from several of my friends who chose to invest their money elsewhere.",
       rating: 5,
       amount: "$11M+",
     },

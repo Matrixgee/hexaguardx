@@ -125,7 +125,7 @@ const Header = () => {
 
           {/* Get Started Button */}
           <button
-            onClick={() => navigate("/auth/login")}
+            onClick={() => navigate("/auth/register")}
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all"
             style={{
               padding: "10px 20px",
