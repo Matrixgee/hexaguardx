@@ -1,21 +1,21 @@
-
 import { IoDownloadOutline } from "react-icons/io5";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { MdOutlinePendingActions, MdOutlineNoEncryptionGmailerrorred } from "react-icons/md";
+import {
+  MdOutlinePendingActions,
+  MdOutlineNoEncryptionGmailerrorred,
+} from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
 import { FaUserPen } from "react-icons/fa6";
 import { TbPackages, TbBleachOff } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-
 const AdminHome = () => {
   // Select admin data from the Redux store
   const adminData = useSelector((state: any) => state.user.adminData);
 
-const Navigate = useNavigate()
-  
- 
+  const Navigate = useNavigate();
+
   // Create dataInfo array with dynamic values
   const dataInfo = [
     {
@@ -63,7 +63,9 @@ const Navigate = useNavigate()
     {
       id: 7,
       value: "Block Users",
-      icon: <MdOutlineNoEncryptionGmailerrorred className="text-2xl text-[#d9321f]" />,
+      icon: (
+        <MdOutlineNoEncryptionGmailerrorred className="text-2xl text-[#d9321f]" />
+      ),
       bgColor: "bg-red-100",
       figure: `${adminData.suspendedUsers}`,
     },
@@ -84,13 +86,22 @@ const Navigate = useNavigate()
           <p>Welcome, Super Admin!</p>
         </div>
         <div className="ActionBtns w-[35%] h-full flex justify-around items-center">
-          <button className="w-32 h-[2.7rem] text-white rounded-md transition-all duration-300 hover:bg-green-500 bg-green-400" onClick={()=>Navigate('/admin/admindeposit')}>
+          <button
+            className="w-32 h-[2.7rem] text-white rounded-md transition-all duration-300 hover:bg-green-500 bg-green-400"
+            onClick={() => Navigate("/admin/admindeposit")}
+          >
             Deposits
           </button>
-          <button className="w-32 h-[2.7rem] text-white rounded-md transition-all duration-300 hover:bg-red-500 bg-red-400" onClick={()=>Navigate('/admin/adminwithdraw')}>
+          <button
+            className="w-32 h-[2.7rem] text-white rounded-md transition-all duration-300 hover:bg-red-500 bg-red-400"
+            onClick={() => Navigate("/admin/adminwithdraw")}
+          >
             Withdrawal
           </button>
-          <button className="w-32 h-[2.7rem] text-white rounded-md transition-all duration-300 hover:bg-blue-500 bg-blue-400" onClick={()=>Navigate('/admin/allusers')}>
+          <button
+            className="w-32 h-[2.7rem] text-white rounded-md transition-all duration-300 hover:bg-blue-500 bg-blue-400"
+            onClick={() => Navigate("/admin/allusers")}
+          >
             Users
           </button>
         </div>
@@ -99,12 +110,14 @@ const Navigate = useNavigate()
         {dataInfo.map((data) => (
           <div
             key={data.id}
-            className="w-[23%] h-[42%] bg-white rounded-md flex justify-center items-center m-2 phone:w-[100%] phone:h-[13%]"
+            className="w-[23%] h-[42%] bg-white rounded-md flex justify-center items-center m-2 max-md:w-[100%] max-md:h-[13%]"
           >
-            <div className={`w-[50px] h-[50px] ${data.bgColor} rounded-full flex justify-center items-center`}>
+            <div
+              className={`w-[50px] h-[50px] ${data.bgColor} rounded-full flex justify-center items-center`}
+            >
               {data.icon}
             </div>
-            <div className="insideCard w-[60%] h-full flex gap-2 justify-center flex-col items-center phone:w-[80%]">
+            <div className="insideCard w-[60%] h-full flex gap-2 justify-center flex-col items-center max-md:w-[80%]">
               <p className="text-lg">{data.value}</p>
               <p>{data.figure}</p>
             </div>

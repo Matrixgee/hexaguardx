@@ -31,7 +31,7 @@ const WelcomeAdmin = () => {
 
   return (
     <div className="w-full h-[100vh] bg-slate-200 flex justify-center items-center">
-      <div className="w-[40%] h-[50%] bg-white rounded-lg flex justify-around gap-6 flex-col items-center phone:w-[90%]">
+      <div className="w-[40%] h-[50%] bg-white rounded-lg flex justify-around gap-6 flex-col items-center max-md:w-[90%]">
         <div className="w-[100%] h-[30%] flex justify-center items-center">
           <p className="text-3xl font-semibold">Welcome {Admin.firstName}</p>
         </div>
