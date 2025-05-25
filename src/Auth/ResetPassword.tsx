@@ -95,7 +95,7 @@ const ResetPassword = () => {
             </span>
           </p>
           <p className="text-slate-400 phone:text-sm text-center">
-            © Copyright 2024 DefiSkySpace All Rights Reserved.
+            © Copyright 2024 HexaGuard All Rights Reserved.
           </p>
         </div>
       </div>

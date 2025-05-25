@@ -103,6 +103,7 @@ const Login = () => {
             className={`h-20 w-20 rounded-full flex items-center justify-center mb-4 ${
               isDark ? "bg-white" : "bg-blue-500"
             }`}
+            onClick={() => navigate("/")}
           >
             <span className="text-white text-2xl font-bold">
               <img src={logo} alt="logo" />
@@ -234,7 +235,7 @@ const Login = () => {
               isDark ? "text-gray-400" : "text-gray-500"
             }`}
           >
-            Copyright 2023 deficrypto-inv. all rights reserved
+            Copyright 2023 HexaGuard. all rights reserved
           </p>
         </div>
       </div>
