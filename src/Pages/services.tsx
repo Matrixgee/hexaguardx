@@ -9,6 +9,7 @@ import {
   FaBell,
   FaHandshake,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
   const { theme } = useTheme();
@@ -21,6 +22,8 @@ const Services = () => {
     features: string[];
     gradient: string;
   };
+
+  const navigate = useNavigate();
 
   const mainServices: ServiceItem[] = [
     {
@@ -392,17 +395,9 @@ const Services = () => {
                   ? "bg-blue-600 hover:bg-blue-700 text-white"
                   : "bg-primary hover:bg-blue-600 text-white"
               }`}
+              onClick={() => navigate("/auth/register")}
             >
               Start Investing Today
-            </button>
-            <button
-              className={`px-8 py-4 rounded-lg font-medium text-lg transition-all border-2 ${
-                isDark
-                  ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
-                  : "border-primary text-primary hover:bg-primary hover:text-white"
-              }`}
-            >
-              Schedule Consultation
             </button>
           </div>
         </motion.div>

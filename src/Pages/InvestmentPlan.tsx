@@ -8,6 +8,7 @@ import {
   FaRocket,
   FaDiamond,
   FaFire,
+  FaWhatsapp,
 } from "react-icons/fa6";
 
 const InvestmentPlan = () => {
@@ -72,6 +73,20 @@ const InvestmentPlan = () => {
 
   const handleInvestNow = () => {
     navigate("/auth/login");
+  };
+
+  // WhatsApp contact function
+  const handleWhatsAppContact = () => {
+    const phoneNumber = "19033300707";
+    const message = encodeURIComponent(
+      "Hi! I'm interested in learning more about your investment plans. Could you help me choose the right plan?"
+    );
+
+    // WhatsApp URL format
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}\\`;
+
+    // Open WhatsApp in new tab/window
+    window.open(whatsappUrl, "_blank");
   };
 
   const containerVariants = {
@@ -314,15 +329,19 @@ const InvestmentPlan = () => {
             Need help choosing the right plan? Our experts are here to guide
             you.
           </p>
-          <button
-            className={`px-8 py-4 rounded-lg font-medium text-lg transition-all ${
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleWhatsAppContact}
+            className={`inline-flex items-center px-8 py-4 rounded-lg font-medium text-lg transition-all ${
               isDark
-                ? "bg-blue-600 hover:bg-blue-700 text-white"
-                : "bg-blue-300 hover:bg-blue-600 text-white"
-            }`}
+                ? "bg-green-600 hover:bg-green-700 text-white"
+                : "bg-green-500 hover:bg-green-600 text-white"
+            } shadow-lg hover:shadow-xl`}
           >
+            <FaWhatsapp className="w-6 h-6 mr-3" />
             Contact Our Experts
-          </button>
+          </motion.button>
         </motion.div>
       </div>
     </div>

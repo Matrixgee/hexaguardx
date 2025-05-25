@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/theme";
-import { FaChevronDown, FaQuestionCircle } from "react-icons/fa";
+import { FaChevronDown, FaQuestionCircle, FaPhone } from "react-icons/fa";
 
 interface FAQItem {
   question: string;
@@ -10,9 +11,12 @@ interface FAQItem {
 
 const FAQSection = () => {
   const { theme } = useTheme();
+  const navigate = useNavigate();
   const isDark = theme === "dark";
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  // Your business phone number for direct calls
+  const businessPhoneNumber = "+1-903-330-0707";
   const faqs: FAQItem[] = [
     {
       question: "What investment options do you offer?",
@@ -58,6 +62,17 @@ const FAQSection = () => {
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  // Navigate to contact page
+  const handleContactSupport = () => {
+    navigate("/contact"); // Adjust this route to match your contact page route
+  };
+
+  // Handle phone call
+  const handleScheduleCall = () => {
+    const phoneUrl = `tel:${businessPhoneNumber}`;
+    window.location.href = phoneUrl;
   };
 
   const containerVariants = {
@@ -235,24 +250,31 @@ const FAQSection = () => {
             investment journey.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleContactSupport}
               className={`px-8 py-4 rounded-lg font-medium text-lg transition-all ${
                 isDark
                   ? "bg-blue-600 hover:bg-blue-700 text-white"
                   : "bg-blue-300 hover:bg-blue-600 text-white"
-              }`}
+              } shadow-lg hover:shadow-xl`}
             >
               Contact Support
-            </button>
-            <button
-              className={`px-8 py-4 rounded-lg font-medium text-lg transition-all border-2 ${
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleScheduleCall}
+              className={`inline-flex items-center px-8 py-4 rounded-lg font-medium text-lg transition-all border-2 ${
                 isDark
                   ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
                   : "border-primary text-primary hover:bg-primary hover:text-white"
-              }`}
+              } shadow-lg hover:shadow-xl`}
             >
-              Schedule Call
-            </button>
+              <FaPhone className="w-4 h-4 mr-2" />
+              Schedule a Call
+            </motion.button>
           </div>
         </motion.div>
       </div>
