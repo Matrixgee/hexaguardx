@@ -39,6 +39,7 @@ import Authlayout from "../layouts/authlayout";
 import ContactUs from "../Pages/contact";
 import Dashboard from "../layouts/userlayouts";
 import ScrollToTop from "../Components/Scrolltotop";
+import AllKyc from "../Admin/allkyc";
 
 // Define the route objects
 const routes: RouteObject[] = [
@@ -187,6 +188,10 @@ const routes: RouteObject[] = [
           {
             path: "allinvestment",
             element: <AllInvestment />,
+          },
+          {
+            path: "allkyc",
+            element: <AllKyc />,
           },
 
           {

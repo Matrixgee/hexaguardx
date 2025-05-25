@@ -28,9 +28,11 @@ const AdminWithdraw = () => {
     fetchWithdrawals();
   }, []);
 
-  const handleAction = async (_id: string, status: "approved" | "declined") => {
-    const toastLoadingId = toast.loading("Please wait..."); // Show loading message before action
-
+  const handleAction = async (
+    _id: string,
+    status: "approved" | "declined" | "processing"
+  ) => {
+    const toastLoadingId = toast.loading("Please wait...");
     try {
       const response = await axios.put(
         `https://hexg.onrender.com/api/admin/approveWithdrawal/${_id}`,
@@ -41,11 +43,11 @@ const AdminWithdraw = () => {
           },
         }
       );
-
+      toast.dismiss(toastLoadingId);
       toast.success(response.data.message);
-      fetchWithdrawals(); // Refresh list after update
+      fetchWithdrawals();
     } catch (error: any) {
-      toast.dismiss(toastLoadingId); // Ensure loading is dismissed on error
+      toast.dismiss(toastLoadingId);
       toast.error(
         error.response?.data?.error || "An error occurred. Please try again."
       );
@@ -53,13 +55,14 @@ const AdminWithdraw = () => {
   };
 
   return (
-    <div className="w-full h-[100%] scrollbar overflow-y-scroll">
-      <div className="w-full h-[10%] flex justify-around items-start px-5 flex-col">
-        <p className="text-3xl font-bold text-gray-500 phone:text-xl">
+    <div className="w-full h-full scrollbar overflow-y-scroll">
+      <div className="w-full px-5 pt-5">
+        <p className="text-3xl font-bold text-gray-500 max-md:text-xl">
           Manage Client Withdrawals
         </p>
       </div>
-      <div className="w-full px-5 overflow-x-auto">
+
+      <div className="w-full px-5 mt-4 overflow-x-auto">
         <table className="w-full text-left border-collapse min-w-[800px]">
           <thead className="bg-gray-200">
             <tr>
@@ -74,21 +77,22 @@ const AdminWithdraw = () => {
           </thead>
           <tbody>
             {withdrawals.map((withdrawal: any) => (
-              <tr key={withdrawal.id}>
-                <td className="p-3 border">{withdrawal._id}</td>
+              <tr key={withdrawal._id}>
+                <td className="p-3 border">{withdrawal._id.slice(0, 6)}</td>
                 <td className="p-3 border">
                   {withdrawal.userId?.userName || "N/A"}
                 </td>
-
                 <td className="p-3 border">${withdrawal.amount}</td>
                 <td className="p-3 border">{withdrawal.mode}</td>
                 <td className="p-3 border">
                   <span
-                    className={`px-2 py-1 rounded ${
+                    className={`px-2 py-1 rounded capitalize ${
                       withdrawal.status === "pending"
                         ? "bg-yellow-500 text-white"
                         : withdrawal.status === "approved"
                         ? "bg-green-500 text-white"
+                        : withdrawal.status === "processing"
+                        ? "bg-blue-500 text-white"
                         : "bg-red-500 text-white"
                     }`}
                   >
@@ -96,12 +100,18 @@ const AdminWithdraw = () => {
                   </span>
                 </td>
                 <td className="p-3 border">{withdrawal.date}</td>
-                <td className="p-3 border flex gap-2">
+                <td className="p-3 border flex flex-wrap gap-2">
                   <button
                     onClick={() => handleAction(withdrawal._id, "approved")}
                     className="bg-green-500 text-white px-3 py-1 rounded"
                   >
                     Approve
+                  </button>
+                  <button
+                    onClick={() => handleAction(withdrawal._id, "processing")}
+                    className="bg-blue-500 text-white px-3 py-1 rounded"
+                  >
+                    Processing
                   </button>
                   <button
                     onClick={() => handleAction(withdrawal._id, "declined")}
