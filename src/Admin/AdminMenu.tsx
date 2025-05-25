@@ -1,11 +1,17 @@
 import React from "react";
 import logo from "../assets/newlog.png";
-import { MdOutlineClear, MdOutlineDashboard, MdHistory } from "react-icons/md";
-import { PiHandDepositFill, PiSwap } from "react-icons/pi";
-import { BiMoneyWithdraw } from "react-icons/bi";
+import {
+  MdOutlineClear,
+  MdOutlineDashboard,
+  MdOutlineWallet,
+} from "react-icons/md";
+
 import { TbPackages } from "react-icons/tb";
-import { RiAccountPinCircleFill } from "react-icons/ri";
+
 import { useNavigate } from "react-router-dom";
+import { FaRegCreditCard } from "react-icons/fa";
+import { FaGear, FaRegCircleUser } from "react-icons/fa6";
+import { KeySquare } from "lucide-react";
 
 interface MenuItem {
   name: string;
@@ -23,13 +29,30 @@ const Sidebar: React.FC<SidebarProps> = ({ active, setActive }) => {
   const [selectedMenu, setSelectedMenu] = React.useState<number | null>(null);
 
   const menuItems: MenuItem[] = [
-    { name: "Dashboard", icon: <MdOutlineDashboard />, path: "overview" },
-    { name: "Deposit", icon: <PiHandDepositFill />, path: "deposit" },
-    { name: "Withdrawal", icon: <BiMoneyWithdraw />, path: "withdraw" },
-    { name: "My Plans", icon: <PiSwap />, path: "my-plans" },
-    { name: "Packages", icon: <TbPackages />, path: "packages" },
-    { name: "History", icon: <MdHistory />, path: "history" },
-    { name: "Support", icon: <RiAccountPinCircleFill />, path: "support" },
+    { name: "Dashboard", icon: <MdOutlineDashboard />, path: "adminhome" },
+    {
+      name: "All Transactions",
+      icon: <FaRegCreditCard />,
+      path: "admindeposit",
+    },
+    {
+      name: "All Withdrawal",
+      icon: <FaRegCreditCard />,
+      path: "adminwithdraw",
+    },
+    { name: "Plans", icon: <TbPackages />, path: "packs" },
+    { name: "All Users", icon: <FaRegCircleUser />, path: "allusers" },
+    {
+      name: "All Investment",
+      icon: <MdOutlineWallet />,
+      path: "allinvestment",
+    },
+    {
+      name: "All Kyc",
+      icon: <KeySquare />,
+      path: "allkyc",
+    },
+    { name: "Settings", icon: <FaGear />, path: "settings" },
   ];
 
   const handleMenuClick = (path: string, index: number) => {

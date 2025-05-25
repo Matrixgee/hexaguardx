@@ -137,12 +137,12 @@ const AdminDeposit = () => {
     <div className="w-full h-full scrollbar overflow-y-scroll">
       <Toaster />
       <div className="w-full h-1/5 flex justify-around items-start px-5 flex-col">
-        <p className="text-3xl font-bold text-gray-500 phone:text-xl">
+        <p className="text-3xl font-bold text-gray-500 max-md:text-xl">
           Manage clients deposits
         </p>
       </div>
-      <div className="w-full h-1/6 flex justify-between px-5 items-center phone:flex-col phone:h-1/4">
-        <div className="w-[40%] h-full flex justify-around items-center phone:w-full">
+      <div className="w-full h-1/6 flex justify-between px-5 items-center max-md:flex-col max-md:h-1/4">
+        <div className="w-[40%] h-full flex justify-around items-center max-md:w-full">
           <button className="w-[30%] h-1/2 text-white font-semibold bg-green-500 rounded-md">
             Copy
           </button>
@@ -153,7 +153,7 @@ const AdminDeposit = () => {
             Print
           </button>
         </div>
-        <div className="w-1/3 h-full flex justify-center items-center phone:w-full">
+        <div className="w-1/3 h-full flex justify-center items-center max-md:w-full">
           <input
             type="text"
             placeholder="Search"

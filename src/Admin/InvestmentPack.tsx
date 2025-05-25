@@ -140,7 +140,7 @@ const InvestmentPack: React.FC = () => {
   return (
     <div className="w-full h-full scrollbar overflow-y-scroll">
       <div className="w-full h-[28%] flex justify-start items-center">
-        <div className="w-[30%] h-[80%] flex justify-center gap-4 flex-col items-start px-4 phone:w-[90%]">
+        <div className="w-[30%] h-[80%] flex justify-center gap-4 flex-col items-start px-4 max-md:w-[90%]">
           <p className="font-semibold text-2xl">System Plans</p>
           <button
             className="w-[40%] h-[40%] bg-[#050C1B] rounded-md text-white flex font-semibold justify-center items-center gap-2"
@@ -156,7 +156,7 @@ const InvestmentPack: React.FC = () => {
           planList.map((plan, index) => (
             <div
               key={index}
-              className="w-[30%] h-[45%] bg-white shadow-lg rounded-md flex justify-around items-center flex-col mb-5 phone:w-[90%]"
+              className="w-[30%] h-[45%] bg-white shadow-lg rounded-md flex justify-around items-center flex-col mb-5 max-md:w-[90%]"
             >
               <div className="w-full h-[15%] flex justify-start px-5 items-center">
                 <p className="text-2xl">{plan.planName}</p>
