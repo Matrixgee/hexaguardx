@@ -10,6 +10,7 @@ import {
   Headphones,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/newlog.png";
 
 interface MenuItem {
   name: string;
@@ -104,7 +105,13 @@ const Sidebar: React.FC<SidebarProps> = ({ active, setActive }) => {
             <div className="logo-container">
               <div className="logo-icon">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-lg">H</span>
+                  <span className="text-white font-bold text-lg">
+                    <img
+                      src={logo}
+                      alt="logo"
+                      className="w-full h-full object-cover"
+                    />
+                  </span>
                 </div>
               </div>
               <div className="logo-text">

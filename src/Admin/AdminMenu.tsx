@@ -1,69 +1,70 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Logo from "../assets/skyBig.png";
-import { MdOutlineDashboard, MdOutlineWallet } from "react-icons/md";
-
+import React from "react";
+import logo from "../assets/newlog.png";
+import { MdOutlineClear, MdOutlineDashboard, MdHistory } from "react-icons/md";
+import { PiHandDepositFill, PiSwap } from "react-icons/pi";
+import { BiMoneyWithdraw } from "react-icons/bi";
 import { TbPackages } from "react-icons/tb";
-import { FaRegCircleUser, FaRegCreditCard, FaGear } from "react-icons/fa6";
+import { RiAccountPinCircleFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
-const AdminMenu: React.FC = () => {
+interface MenuItem {
+  name: string;
+  icon: React.ReactElement;
+  path: string;
+}
+
+interface SidebarProps {
+  active: boolean;
+  setActive: (active: boolean) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ active, setActive }) => {
   const navigate = useNavigate();
-  const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
-
-  type MenuItem = {
-    name: string;
-    icon: React.ElementType;
-    path: string;
-  };
+  const [selectedMenu, setSelectedMenu] = React.useState<number | null>(null);
 
   const menuItems: MenuItem[] = [
-    { name: "Dashboard", icon: MdOutlineDashboard, path: "adminhome" },
-    { name: "All Transactions", icon: FaRegCreditCard, path: "admindeposit" },
-    { name: "All Withdrawal", icon: FaRegCreditCard, path: "adminwithdraw" },
-    { name: "Plans", icon: TbPackages, path: "packs" },
-    { name: "All Users", icon: FaRegCircleUser, path: "allusers" },
-    { name: "All Investment", icon: MdOutlineWallet, path: "allinvestment" },
-    { name: "Settings", icon: FaGear, path: "settings" },
+    { name: "Dashboard", icon: <MdOutlineDashboard />, path: "overview" },
+    { name: "Deposit", icon: <PiHandDepositFill />, path: "deposit" },
+    { name: "Withdrawal", icon: <BiMoneyWithdraw />, path: "withdraw" },
+    { name: "My Plans", icon: <PiSwap />, path: "my-plans" },
+    { name: "Packages", icon: <TbPackages />, path: "packages" },
+    { name: "History", icon: <MdHistory />, path: "history" },
+    { name: "Support", icon: <RiAccountPinCircleFill />, path: "support" },
   ];
 
   const handleMenuClick = (path: string, index: number) => {
     setSelectedMenu(index);
     navigate(path);
+    setActive(false);
   };
 
-  const renderMenuItem = (item: MenuItem, index: number) => (
-    <div
-      key={index}
-      className={`w-[98%] h-[10%] flex justify-center items-center cursor-pointer transition-all transform duration-300 rounded-md font-semibold hover:bg-[#03045E] ${
-        selectedMenu === index ? "bg-[#03045E] text-white" : "text-[#cee4f3]"
-      }`}
-      onClick={() => handleMenuClick(item.path, index)}
-    >
-      <div className="w-[70%] gap-3 flex justify-start items-center">
-        <item.icon className="text-xl" />
-        <div>{item.name}</div>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="w-[100%] h-[100%] bg-[#050C1B] rounded-sm flex flex-col justify-around phone:hidden">
-      <div className="w-[100%] h-[15%] flex flex-col justify-center items-center">
-        <img
-          src={Logo}
-          alt=""
-          className="w-[80%] h-[60%] object-contain cursor-pointer"
-          onClick={() => navigate("/")}
-        />
+    <aside className={`sidebar z-30 ${active ? "active" : ""}`}>
+      <div className="close_icon" onClick={() => setActive(!active)}>
+        <MdOutlineClear />
       </div>
-      <div className="w-[100%] h-[70%] ">
-        <div className="w-[100%] h-[90%] items-center flex-col flex justify-around">
-          {menuItems.map((item, index) => renderMenuItem(item, index))}
+      <div className="sidebar_inner">
+        <div className="logo">
+          <img src={logo} alt="FinTrading Logo" />
+          <span className="text-slate-200">HexaGuard</span>
         </div>
-        <div className="w-[100%] h-[15%]"></div>
+        <div className="sidebar_items w-[90%]">
+          <ul className="sidebar_items_inner text-slate-400">
+            {menuItems.map((item, index) => (
+              <li
+                key={index}
+                className={selectedMenu === index ? "active" : ""}
+                onClick={() => handleMenuClick(item.path, index)}
+              >
+                <span className="menu_icon">{item.icon}</span>
+                <a href="#">{item.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </aside>
   );
 };
 
-export default AdminMenu;
+export default Sidebar;

@@ -24,7 +24,7 @@ const UserHeader: React.FC<UserHeaderProps> = ({ active, setActive }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [userImage, setUserImage] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [notifications] = useState(3); // Mock notification count
+  const [notifications] = useState(0); // Mock notification count
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();

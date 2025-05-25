@@ -19,28 +19,27 @@ const History: React.FC = () => {
   const transactions =
     useSelector((state: any) => state.user.userTransactions) || [];
 
-  const getHistory = async () => {
-    const url = "https://hexg.onrender.com/api/user/history";
-    const headers = {
-      Authorization: `Bearer ${userToken}`,
-    };
-    try {
-      const response = await axios.get(url, { headers });
-      // Ensure response.data.data is an array
-      if (Array.isArray(response.data.data)) {
-        dispatch(setUserTransactions(response.data.data));
-      } else {
-        console.error("Unexpected data format:", response.data.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    if (userToken) {
-      getHistory();
-    }
+    const getHistory = async () => {
+      try {
+        const response = await axios.get(
+          "https://hexg.onrender.com/api/user/history",
+          {
+            headers: { Authorization: `Bearer ${userToken}` },
+          }
+        );
+
+        if (Array.isArray(response.data.data)) {
+          dispatch(setUserTransactions(response.data.data));
+        } else {
+          console.error("Unexpected data format:", response.data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (userToken) getHistory();
   }, [dispatch, userToken]);
 
   const columns: Column<Transaction>[] = useMemo(
@@ -67,20 +66,20 @@ const History: React.FC = () => {
         accessor: "status",
         Cell: ({ value }) => (
           <span
-            className={
+            className={`px-3 py-1 rounded-full text-xs font-semibold ${
               value === "approved"
-                ? "bg-green-500 text-white px-2 py-1 rounded"
+                ? "bg-green-600 text-white"
                 : value === "declined"
-                ? "bg-red-500 text-white px-2 py-1 rounded"
-                : "bg-yellow-500 text-white px-2 py-1 rounded"
-            }
+                ? "bg-red-600 text-white"
+                : "bg-yellow-500 text-black"
+            }`}
           >
             {value}
           </span>
         ),
       },
       {
-        Header: "Date Created",
+        Header: "Date",
         accessor: "createdAt",
         Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
@@ -95,44 +94,86 @@ const History: React.FC = () => {
     });
 
   return (
-    <div className="w-full h-full bg-[#101829] scroll scrollbar-thin overflow-y-scroll">
-      <div className="w-[100%] h-[20%] flex justify-center items-center">
-        <p className="text-2xl text-gray-200">Transaction History</p>
+    <div className="relative w-full h-full overflow-x-hidden overflow-y-scroll bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-24 left-16 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-24 right-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/2 right-1/3 w-52 h-52 bg-pink-500/5 rounded-full blur-3xl animate-pulse delay-500" />
       </div>
-      <div className="w-full h-[80%] bg-[#1a2236] p-4 overflow-x-auto">
-        <table
-          {...getTableProps()}
-          className="w-full text-left border-collapse min-w-[800px]"
-        >
-          <thead className="bg-gray-700 text-white">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} className="p-3 border">
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr
-                  {...row.getRowProps()}
-                  className="bg-gray-800 text-gray-200"
-                >
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="p-3 border">
-                      {cell.render("Cell")}
-                    </td>
+
+      {/* Content */}
+      <div className="relative z-10 px-4 sm:px-6 lg:px-10 py-10 space-y-8">
+        <div className="flex items-center gap-4">
+          <div className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl">
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 10h1l1-2h13l1 2h1m-6 0v10m-4-10v10M3 10l2 10h14l2-10"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white">
+              Transaction History
+            </h1>
+            <p className="text-sm text-gray-400">
+              Review all your transactions
+            </p>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto bg-white/5 backdrop-blur-lg border border-white/10 rounded-3xl shadow-lg shadow-purple-500/10">
+          <table
+            {...getTableProps()}
+            className="min-w-[800px] w-full text-sm text-left text-gray-300"
+          >
+            <thead className="bg-white/10 border-b border-white/10 text-gray-200">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      className="px-6 py-4 font-semibold tracking-wide"
+                    >
+                      {column.render("Header")}
+                    </th>
                   ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody
+              {...getTableBodyProps()}
+              className="divide-y divide-white/10"
+            >
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr
+                    {...row.getRowProps()}
+                    className="hover:bg-white/5 transition duration-200"
+                  >
+                    {row.cells.map((cell) => (
+                      <td
+                        {...cell.getCellProps()}
+                        className="px-6 py-4 whitespace-nowrap"
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
