@@ -4,10 +4,13 @@ import { FaStar, FaQuoteLeft } from "react-icons/fa";
 import Bob from "../assets/bob.jpg";
 import Blake from "../assets/blake.jpg";
 import Erica from "../assets/Erica.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Testimonials = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+
+  const navigate = useNavigate();
 
   const testimonials = [
     {
@@ -265,6 +268,7 @@ const Testimonials = () => {
                 ? "bg-blue-600 hover:bg-blue-700 text-white"
                 : "bg-blue-300 hover:bg-blue-600 text-white"
             }`}
+            onClick={() => navigate("/auth/register")}
           >
             Start Investing Now
           </button>

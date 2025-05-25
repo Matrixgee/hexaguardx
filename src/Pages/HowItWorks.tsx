@@ -8,6 +8,7 @@ import { LiaDonateSolid } from "react-icons/lia";
 import { MdMarkEmailRead } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useTheme } from "../Context/theme";
+import { useNavigate } from "react-router-dom";
 
 const HowItWorks = () => {
   const { theme } = useTheme();
@@ -18,6 +19,8 @@ const HowItWorks = () => {
     todo: string;
     text: string;
   };
+
+  const navigate = useNavigate();
 
   const theWorks: HowItWorksItem[] = [
     {
@@ -205,6 +208,7 @@ const HowItWorks = () => {
                 ? "bg-blue-600 hover:bg-blue-700"
                 : "bg-blue-300 hover:bg-blue-600"
             }`}
+            onClick={() => navigate("/auth/register")}
           >
             Start Your Journey Now
           </button>
