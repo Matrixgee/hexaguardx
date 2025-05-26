@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Modal } from "antd";
 import { FaRegBell, FaCaretDown } from "react-icons/fa";
-import { PiSignOut, PiGearSix } from "react-icons/pi";
+import { PiSignOut } from "react-icons/pi";
 import { FaCircleUser } from "react-icons/fa6";
-import { AiOutlineUser } from "react-icons/ai";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,16 +67,6 @@ const UserHeader: React.FC<UserHedeprops> = ({ active, setActive }) => {
   };
 
   const menuItems = [
-    {
-      label: "My Profile",
-      icon: <AiOutlineUser className="text-2xl" />,
-      path: "account/profile",
-    },
-    {
-      label: "Settings",
-      icon: <PiGearSix className="text-2xl" />,
-      path: "account/security",
-    },
     {
       label: "Notifications",
       icon: <FaRegBell className="text-2xl" />,
@@ -142,7 +132,7 @@ const UserHeader: React.FC<UserHedeprops> = ({ active, setActive }) => {
               <AnimatePresence>
                 {showMenu && (
                   <motion.div
-                    className="dropDown-dashboard w-[15rem] h-[13rem] flex justify-around items-start px-4 flex-col bg-white shadow-md absolute top-11 right-[-20%] z-40"
+                    className="dropDown-dashboard w-[16rem] h-[5rem] flex justify-around items-start px-2 flex-col bg-white shadow-md absolute top-11 right-[-20%] z-40"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -151,7 +141,7 @@ const UserHeader: React.FC<UserHedeprops> = ({ active, setActive }) => {
                     {menuItems.map((item, index) => (
                       <div
                         key={index}
-                        className={`w-[90%] h-[20%] gap-3 rounded-md transition-all transform duration-300 cursor-pointer px-5 flex justify-start items-center hover:bg-[#CCCCCC] ${
+                        className={`w-[90%] h-[20%] gap-3 rounded-md transition-all transform duration-300 cursor-pointer px-8 flex justify-start items-center hover:bg-[#CCCCCC] ${
                           item.mobileOnly ? "hidden phone:flex" : ""
                         }`}
                         onClick={() => {

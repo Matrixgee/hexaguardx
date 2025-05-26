@@ -79,7 +79,7 @@ const AdminHome = () => {
   ];
 
   return (
-    <div className="w-full h-[100%] bg-slate-100 scrollbar-thin overflow-y-scroll">
+    <div className="w-full h-[calc(100%-6rem)] bg-slate-100 scrollbar-thin overflow-y-scroll">
       <div className="AdminWel w-full h-[25%] flex justify-between items-center">
         <div className="AdminTex w-[30%] h-full px-5 flex justify-center flex-col items-start">
           <p className="text-2xl">Dashboard</p>

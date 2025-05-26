@@ -28,29 +28,66 @@ const AdminWithdraw = () => {
     fetchWithdrawals();
   }, []);
 
-  const handleAction = async (
-    _id: string,
-    status: "approved" | "declined" | "processing"
-  ) => {
-    const toastLoadingId = toast.loading("Please wait...");
+  const handleApproveWithdraw = async (_id: string) => {
+    const toastId = toast.loading("Approving...");
     try {
       const response = await axios.put(
         `https://hexg.onrender.com/api/admin/approveWithdrawal/${_id}`,
-        { status },
+        { status: "approved" },
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
         }
       );
-      toast.dismiss(toastLoadingId);
+      toast.dismiss(toastId);
       toast.success(response.data.message);
       fetchWithdrawals();
     } catch (error: any) {
-      toast.dismiss(toastLoadingId);
-      toast.error(
-        error.response?.data?.error || "An error occurred. Please try again."
+      toast.dismiss(toastId);
+      toast.error(error.response?.data?.error || "Approval failed.");
+    }
+  };
+
+  const handleDeclineWithdraw = async (_id: string) => {
+    const toastId = toast.loading("Declining...");
+    try {
+      const response = await axios.put(
+        `https://hexg.onrender.com/api/admin/declineWithdrawal/${_id}`,
+        { status: "rejected" },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
       );
+      toast.dismiss(toastId);
+      toast.success(response.data.message);
+      fetchWithdrawals();
+    } catch (error: any) {
+      toast.dismiss(toastId);
+      toast.error(error.response?.data?.error || "Decline failed.");
+    }
+  };
+
+  const handleProcessingWithdraw = async (_id: string) => {
+    const toastId = toast.loading("Marking as processing...");
+    try {
+      const response = await axios.put(
+        `https://hexg.onrender.com/api/admin/updateWithdrawalStatus/${_id}`,
+        { status: "processing" },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      toast.dismiss(toastId);
+      toast.success(response.data.message);
+      fetchWithdrawals();
+    } catch (error: any) {
+      toast.dismiss(toastId);
+      toast.error(error.response?.data?.error || "Processing failed.");
     }
   };
 
@@ -102,19 +139,19 @@ const AdminWithdraw = () => {
                 <td className="p-3 border">{withdrawal.date}</td>
                 <td className="p-3 border flex flex-wrap gap-2">
                   <button
-                    onClick={() => handleAction(withdrawal._id, "approved")}
+                    onClick={() => handleApproveWithdraw(withdrawal._id)}
                     className="bg-green-500 text-white px-3 py-1 rounded"
                   >
                     Approve
                   </button>
                   <button
-                    onClick={() => handleAction(withdrawal._id, "processing")}
+                    onClick={() => handleProcessingWithdraw(withdrawal._id)}
                     className="bg-blue-500 text-white px-3 py-1 rounded"
                   >
                     Processing
                   </button>
                   <button
-                    onClick={() => handleAction(withdrawal._id, "declined")}
+                    onClick={() => handleDeclineWithdraw(withdrawal._id)}
                     className="bg-red-500 text-white px-3 py-1 rounded"
                   >
                     Decline
