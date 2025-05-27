@@ -40,6 +40,7 @@ import ContactUs from "../Pages/contact";
 import Dashboard from "../layouts/userlayouts";
 import ScrollToTop from "../Components/Scrolltotop";
 import AllKyc from "../Admin/allkyc";
+import Updatekyc from "../Client/Updatekyc";
 
 // Define the route objects
 const routes: RouteObject[] = [
@@ -131,6 +132,10 @@ const routes: RouteObject[] = [
           {
             path: "packages",
             element: <Packages />,
+          },
+          {
+            path: "updatekyc",
+            element: <Updatekyc />,
           },
           {
             path: "account",
