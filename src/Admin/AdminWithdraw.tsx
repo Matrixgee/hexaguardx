@@ -74,7 +74,7 @@ const AdminWithdraw = () => {
     const toastId = toast.loading("Marking as processing...");
     try {
       const response = await axios.put(
-        `https://hexg.onrender.com/api/admin/updateWithdrawalStatus/${_id}`,
+        `https://hexg.onrender.com/api/admin/pendingWithdrawal/${_id}`,
         { status: "processing" },
         {
           headers: {

@@ -9,6 +9,7 @@ import {
   Menu,
   ArrowDownToLine,
   ArrowUpFromLine,
+  KeySquare,
 } from "lucide-react";
 import "./header.css";
 import { clearUser } from "../Function/Slice";
@@ -74,7 +75,7 @@ const UserHeader: React.FC<UserHeaderProps> = ({ active, setActive }) => {
   };
 
   const handleNavigation = (path: string) => {
-    // navigate(path);
+    navigate(path);
     console.log(`Navigate to: ${path}`);
   };
 
@@ -94,6 +95,11 @@ const UserHeader: React.FC<UserHeaderProps> = ({ active, setActive }) => {
       icon: <Bell className="w-5 h-5" />,
       path: "/user/overview",
       mobileOnly: true,
+    },
+    {
+      label: "Update KYC",
+      icon: <KeySquare className="w-5 h-5" />,
+      path: "/user/updatekyc",
     },
   ];
 
