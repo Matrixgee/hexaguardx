@@ -211,7 +211,10 @@ const Login = () => {
                 </Link>
               </p>
             </div>
-            <div className="text-sm">
+            <div
+              className="text-sm  px-9 flex justify-end items-center"
+              onClick={() => navigate("/auth/forget")}
+            >
               <span className="text-blue-500 font-semibold cursor-pointer hover:underline">
                 Forget Password?
               </span>

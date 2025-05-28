@@ -183,12 +183,12 @@ const UserDetails = () => {
   return (
     <div className="w-full h-full overflow-y-scroll">
       <div
-        className={`w-full h-24 flex justify-between px-8 items-center phone:h-[7rem] phone:justify-center gap-2 phone:flex-col`}
+        className={`w-full h-24 flex justify-between px-8 items-center max-md:h-[7rem] max-md:justify-center gap-2 max-md:flex-col`}
       >
         <p className="font-medium text-2xl">
           {oneUser.firstName} {oneUser.lastName}
         </p>
-        <div className="relative w-2/5 h-12 flex justify-center gap-2 items-center phone:w-[100%]">
+        <div className="relative w-2/5 h-12 flex justify-center gap-2 items-center max-md:w-[100%]">
           <button
             className="py-2 px-6 bg-red-500 rounded-md text-white"
             onClick={handleBack}
@@ -248,14 +248,14 @@ const UserDetails = () => {
           )}
         </div>
       </div>
-      <div className="w-full h-40 flex justify-center items-center phone:h-[50rem]">
-        <div className="w-11/12 h-5/6 border-2 flex justify-between items-center phone:w-[80%] phone:flex-col">
-          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center phone:w-[90%]">
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+      <div className="w-full h-40 flex justify-center items-center max-md:h-[50rem]">
+        <div className="w-11/12 h-5/6 border-2 flex justify-between items-center max-md:w-[80%] max-md:flex-col">
+          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center max-md:w-[90%]">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>Account Balance</p>
               <p>${oneUser.accountBalance}</p>
             </div>
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>User Acct Status</p>
               <p
                 className={`py-0 px-3 rounded-md text-white ${getStatusColor()}`}
@@ -264,24 +264,24 @@ const UserDetails = () => {
               </p>
             </div>
           </div>
-          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center phone:w-[90%]">
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center max-md:w-[90%]">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>Profit</p>
               <p>${oneUser.totalProfit}</p>
             </div>
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>Inv. Plans</p>
               <p>
                 {oneUser.investmentPlan > 0 ? "Has Inv plans" : "No Inv plans"}
               </p>
             </div>
           </div>
-          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center phone:w-[90%]">
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center max-md:w-[90%]">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>Referral Bonus</p>
               <p>${oneUser.referralBonus}</p>
             </div>
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>KYC</p>
               <p
                 className={`py-0 px-3 rounded-md text-white ${
@@ -292,12 +292,12 @@ const UserDetails = () => {
               </p>
             </div>
           </div>
-          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center phone:w-[90%]">
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+          <div className="w-1/5 h-full flex justify-around flex-col px-2 items-center max-md:w-[90%]">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>Bonus</p>
               <p>${oneUser.totalBonus}</p>
             </div>
-            <div className="w-full h-2/5 flex justify-around items-center flex-col phone:items-start">
+            <div className="w-full h-2/5 flex justify-around items-center flex-col max-md:items-start">
               <p>Trade Mode</p>
               <p
                 className={`py-0 px-3 rounded-md text-white ${
@@ -344,7 +344,7 @@ const UserDetails = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label className="font-medium text-lg">Phone</label>
+              <label className="font-medium text-lg">max-md</label>
               <input
                 type="text"
                 className="border p-2 rounded-md"

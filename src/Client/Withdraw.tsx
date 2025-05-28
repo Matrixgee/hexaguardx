@@ -96,7 +96,7 @@ const Withdraw = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse delay-500"></div>
       </div>
 
-      <div className="w-1/2 max-md:w-full h-max bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-20 max-md:px-5 py-10 flex flex-col gap-6 items-center shadow-2xl relative z-10">
+      <div className="w-1/2 max-md:w-full h-max bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-20 max-md:px-5 py-10 flex flex-col gap-6 items-center shadow-2xl relative ">
         {/* Header with icon */}
         <div className="flex items-center gap-3 mb-2">
           <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">

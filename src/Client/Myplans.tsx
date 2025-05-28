@@ -90,7 +90,7 @@ const Myplans = () => {
         <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      <div className="relative z-10 w-full h-max flex flex-col px-10 phone:px-4 py-8 gap-6">
+      <div className="relative  w-full h-max flex flex-col px-10 phone:px-4 py-8 gap-6">
         {myPlans && myPlans.length > 0 ? (
           <>
             {/* Header Section */}
@@ -238,7 +238,7 @@ const Myplans = () => {
               {/* Background decoration */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl"></div>
 
-              <div className="relative z-10">
+              <div className="relative ">
                 <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <TrendingUp className="w-10 h-10 text-white" />
                 </div>

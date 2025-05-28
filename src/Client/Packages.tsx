@@ -122,7 +122,7 @@ const Packages = () => {
         <div className="absolute top-1/2 right-1/3 w-52 h-52 md:w-64 md:h-64 bg-pink-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      <div className="relative z-10 px-4 sm:px-6 lg:px-10 pb-20">
+      <div className="relative  px-4 sm:px-6 lg:px-10 pb-20">
         {/* Header */}
         <div className="w-full py-10 flex flex-col md:flex-row items-start md:items-center">
           <div className="flex gap-4 items-center">

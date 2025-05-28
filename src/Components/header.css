@@ -247,13 +247,14 @@
   top: 100%;
   right: 0;
   margin-top: 0.5rem;
-  z-index: 50;
+  z-index: 9999;
   animation: fadeInDown 0.2s ease-out;
 }
 
 .dropdown-content {
   min-width: 12rem;
   background: rgba(15, 23, 42, 0.95);
+  z-index: 1000;
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
