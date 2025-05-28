@@ -165,7 +165,7 @@ const Deposit = () => {
       </div>
 
       {showTransactionDetails ? (
-        <div className="relative z-10 max-w-2xl mx-auto">
+        <div className="relative  max-w-2xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">
             <button
@@ -283,7 +283,7 @@ const Deposit = () => {
           </div>
         </div>
       ) : (
-        <div className="relative z-10 max-w-4xl mx-auto">
+        <div className="relative max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-2xl font-bold text-white mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">

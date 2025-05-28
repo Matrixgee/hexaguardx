@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../config/axiosconig";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const Updatekyc = () => {
   const [formData, setFormData] = useState({
@@ -29,6 +32,34 @@ const Updatekyc = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [countries, setCountries] = useState<string[]>([]);
+  const [loadingCountries, setLoadingCountries] = useState(false);
+  const userId = useSelector((state: { user: any }) => state.user.user?._id);
+  console.log(userId);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      setLoadingCountries(true);
+      try {
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        const data = await response.json();
+        const sortedCountries = data
+          .map((country: any) => country.name.common)
+          .sort((a: string, b: string) => a.localeCompare(b));
+        setCountries(sortedCountries);
+      } catch (error) {
+        toast.error("Failed to load countries");
+        console.error("Country fetch error:", error);
+      } finally {
+        setLoadingCountries(false);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  const userToken = useSelector((state: any) => state.user.token);
+
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -40,7 +71,6 @@ const Updatekyc = () => {
       [name]: value,
     }));
 
-    // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors((prev) => ({
         ...prev,
@@ -73,24 +103,34 @@ const Updatekyc = () => {
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
+    const loadingId = toast.loading("Please wait...");
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log("KYC Update Data:", formData);
-      alert("KYC information updated successfully!");
+    try {
+      const { data } = await axios.post(`/user/submitKYC/${userId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+
+      toast.success("KYC information updated successfully!");
+      console.log("Response data:", data);
+    } catch (error: any) {
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+      console.error("API error:", error);
+    } finally {
+      toast.dismiss(loadingId);
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   return (
-    <div className="h-screen overflow-y-scroll scrollbar-thin bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500 p-4 flex items-center justify-center">
-      <div className="w-full max-w-4xl bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8">
-        <div className="text-center mb-8">
+    <div className="h-[100%] w-full overflow-y-scroll  bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500 flex justify-center py-12 px-4">
+      <div className="w-full max-w-4xl h-[65rem] max-md:h-[93rem] bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8">
+        {/* Header */}
+        <div className="text-center mb-6">
           <h1 className="text-4xl font-bold text-white mb-2">
             Update KYC Information
           </h1>
@@ -99,7 +139,8 @@ const Updatekyc = () => {
           </p>
         </div>
 
-        <div className="space-y-6">
+        {/* Form Content */}
+        <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Full Name */}
             <div className="space-y-2">
@@ -111,7 +152,7 @@ const Updatekyc = () => {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
+                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 placeholder="Enter your full name"
               />
               {errors.fullName && (
@@ -124,14 +165,31 @@ const Updatekyc = () => {
               <label className="block text-white font-semibold text-sm">
                 Country *
               </label>
-              <input
-                type="text"
+              <select
                 name="country"
                 value={formData.country}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
-                placeholder="Enter your country"
-              />
+                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                <option value="">Select your country</option>
+                {loadingCountries ? (
+                  <option disabled>Loading countries...</option>
+                ) : (
+                  countries.map((country) => (
+                    <option
+                      key={country}
+                      value={country}
+                      className="text-gray-800"
+                    >
+                      {country}
+                    </option>
+                  ))
+                )}
+              </select>
+              {errors.country && (
+                <p className="text-red-300 text-sm">{errors.country}</p>
+              )}
+
               {errors.country && (
                 <p className="text-red-300 text-sm">{errors.country}</p>
               )}
@@ -147,7 +205,7 @@ const Updatekyc = () => {
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
+                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
 
@@ -161,7 +219,7 @@ const Updatekyc = () => {
                 name="ppEmail"
                 value={formData.ppEmail}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
+                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 placeholder="Enter PayPal email"
               />
               {errors.ppEmail && (
@@ -180,12 +238,12 @@ const Updatekyc = () => {
               value={formData.mAddress}
               onChange={handleInputChange}
               rows={3}
-              className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300 resize-none"
+              className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none"
               placeholder="Enter your mailing address"
             />
           </div>
 
-          {/* Banking Information Section */}
+          {/* Banking Information */}
           <div className="bg-white/10 rounded-2xl p-6 border border-white/20">
             <h3 className="text-2xl font-bold text-white mb-4">
               Banking Information
@@ -202,7 +260,7 @@ const Updatekyc = () => {
                   name="bankName"
                   value={formData.bankName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   placeholder="Enter bank name"
                 />
                 {errors.bankName && (
@@ -219,7 +277,7 @@ const Updatekyc = () => {
                   name="accountType"
                   value={formData.accountType}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   <option value="" className="text-gray-800">
                     Select account type
@@ -243,7 +301,7 @@ const Updatekyc = () => {
                   name="accountNumber"
                   value={formData.accountNumber}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   placeholder="Enter account number"
                 />
               </div>
@@ -258,53 +316,54 @@ const Updatekyc = () => {
                   name="routingNumber"
                   value={formData.routingNumber}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   placeholder="Enter routing number"
                 />
               </div>
             </div>
           </div>
-
-          {/* Submit Button */}
-          <div className="flex justify-center pt-6">
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="w-full md:w-auto px-12 py-4 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              {isSubmitting ? (
-                <span className="flex items-center justify-center">
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Updating...
-                </span>
-              ) : (
-                "Update KYC Information"
-              )}
-            </button>
-          </div>
         </div>
 
-        <div className="text-center mt-6">
+        {/* Submit Button */}
+        <div className="pt-6">
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="w-full px-12 py-4 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+          >
+            {isSubmitting ? (
+              <span className="flex items-center justify-center">
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Updating...
+              </span>
+            ) : (
+              "Update KYC Information"
+            )}
+          </button>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-4">
           <p className="text-blue-100 text-sm">
             All information is encrypted and securely stored. Fields marked with
             * are required.

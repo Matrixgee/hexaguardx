@@ -3,12 +3,14 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../Context/theme";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const userToken = useSelector((state: any) => state.user.token);
-  console.log(userToken);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const url = "https://hexg.onrender.com/api/user/forgotPass";
   const headers = {
@@ -17,7 +19,6 @@ const ForgetPassword = () => {
 
   const forgetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const toastloading = toast.loading("Please wait....");
 
     try {
@@ -36,14 +37,22 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="w-full h-[100vh] bg-[#F8F9F9] flex justify-center items-center">
-      <div className="w-[30%] h-[60%] bg-white rounded-md flex justify-around items-center flex-col phone:w-[90%] phone:h-[50%]">
-        <div className="w-[100%] h-[20%] flex justify-center items-center">
+    <div
+      className={`w-full h-[100vh] flex justify-center items-center transition-all duration-300 ${
+        isDark ? "bg-gray-900 text-white" : "bg-[#F8F9F9] text-gray-800"
+      }`}
+    >
+      <div
+        className={`w-[30%] max-md:w-[90%] h-[60%] max-md:h-[50%] rounded-md flex justify-around items-center flex-col shadow-lg transition-all duration-300 ${
+          isDark ? "bg-gray-800 border border-gray-700" : "bg-white"
+        }`}
+      >
+        <div className="w-full h-[20%] flex justify-center items-center">
           <p className="font-bold text-3xl text-blue-600">Password Reset</p>
         </div>
-        <div className="w-[100%] h-[50%] flex justify-around items-center">
+        <div className="w-full h-[50%] flex justify-around items-center">
           <form
-            className="w-[100%] h-[100%] flex justify-center flex-col items-center"
+            className="w-full h-full flex justify-center flex-col items-center"
             onSubmit={forgetPassword}
           >
             <div className="w-[90%] h-[60%] gap-2 px-1 flex justify-center items-start flex-col">
@@ -52,14 +61,18 @@ const ForgetPassword = () => {
               </label>
               <input
                 type="email"
-                placeholder=""
-                className="forgetinput py-3 outline-none border-2 px-16 rounded-md"
+                placeholder="Enter your email"
+                className={`py-3 outline-none border-2 px-4 w-full rounded-md ${
+                  isDark
+                    ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                    : "bg-white text-black border-gray-300 placeholder-gray-500"
+                }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
-            <div className="w-full h-[40%] flex justify-center items-center">
+            <div className="w-full h-[40%] flex justify-center items-center mt-4">
               <button
                 type="submit"
                 className="py-3 transition-all duration-300 hover:bg-blue-500 text-white font-semibold px-6 rounded-md bg-blue-700"
@@ -69,18 +82,18 @@ const ForgetPassword = () => {
             </div>
           </form>
         </div>
-        <div className="w-full h-[25%] flex flex-col items-center justify-around px-6">
+        <div className="w-full h-[25%] flex flex-col items-center justify-around px-6 text-center">
           <p>
             Repeat Login?{" "}
             <span
-              className="text-slate-600 font-bold cursor-pointer"
-              onClick={() => navigate("/login")}
+              className="text-slate-600 dark:text-slate-300 font-bold cursor-pointer"
+              onClick={() => navigate("/auth/login")}
             >
               Login
             </span>
           </p>
-          <p className="text-slate-400 phone:text-sm text-center">
-            © Copyright 2024 HexaGuard All Rights Reserved.
+          <p className="text-slate-400 max-md:text-sm">
+            © Copyright 2024 HexaGuard. All Rights Reserved.
           </p>
         </div>
       </div>

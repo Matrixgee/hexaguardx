@@ -103,7 +103,7 @@ const History: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 px-4 sm:px-6 lg:px-10 py-10 space-y-8">
+      <div className="relative  px-4 sm:px-6 lg:px-10 py-10 space-y-8">
         <div className="flex items-center gap-4">
           <div className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl">
             <svg

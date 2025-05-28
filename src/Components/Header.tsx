@@ -45,7 +45,7 @@ const Header = () => {
         scrolled
           ? "bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg"
           : "bg-white dark:bg-black"
-      } text-gray-800 dark:text-white fixed z-50 transition-all duration-300`}
+      } text-gray-800 dark:text-white fixed z-[99] transition-all duration-300`}
       style={{
         width: "100%",
         height: "10vh",
