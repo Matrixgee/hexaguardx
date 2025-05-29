@@ -11,7 +11,8 @@ const Updatekyc = () => {
     routingNumber: "",
     bankName: "",
     accountType: "",
-    ppEmail: "",
+    walletType: "",
+    walletAddress: "",
     country: "",
     dateOfBirth: "",
     mAddress: "",
@@ -23,7 +24,8 @@ const Updatekyc = () => {
     routingNumber?: string;
     bankName?: string;
     accountType?: string;
-    ppEmail?: string;
+    walletType?: string;
+    walletAddress?: string;
     country?: string;
     dateOfBirth?: string;
     mAddress?: string;
@@ -94,8 +96,12 @@ const Updatekyc = () => {
       newErrors.country = "Country is required";
     }
 
-    if (formData.ppEmail && !/\S+@\S+\.\S+/.test(formData.ppEmail)) {
-      newErrors.ppEmail = "Please enter a valid email address";
+    if (!formData.walletType.trim()) {
+      newErrors.walletType = "Wallet type is required";
+    }
+
+    if (!formData.walletAddress.trim()) {
+      newErrors.walletAddress = "Wallet address is required";
     }
 
     setErrors(newErrors);
@@ -209,21 +215,39 @@ const Updatekyc = () => {
               />
             </div>
 
-            {/* PayPal Email */}
+            {/* Wallet Type */}
             <div className="space-y-2">
               <label className="block text-white font-semibold text-sm">
-                PayPal Email
+                Wallet Type
               </label>
               <input
-                type="email"
-                name="ppEmail"
-                value={formData.ppEmail}
+                type="text"
+                name="walletType"
+                value={formData.walletType}
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                placeholder="Enter PayPal email"
+                placeholder="e.g. Bitcoin, Ethereum, USDT"
               />
-              {errors.ppEmail && (
-                <p className="text-red-300 text-sm">{errors.ppEmail}</p>
+              {errors.walletType && (
+                <p className="text-red-300 text-sm">{errors.walletType}</p>
+              )}
+            </div>
+
+            {/* Wallet Address */}
+            <div className="space-y-2">
+              <label className="block text-white font-semibold text-sm">
+                Wallet Address
+              </label>
+              <input
+                type="text"
+                name="walletAddress"
+                value={formData.walletAddress}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder="Enter wallet address"
+              />
+              {errors.walletAddress && (
+                <p className="text-red-300 text-sm">{errors.walletAddress}</p>
               )}
             </div>
           </div>
