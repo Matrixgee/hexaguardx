@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import logo from "./assets/newlog.png";
 import { MainRoutes } from "./Routes/MainRoutes";
@@ -42,22 +43,41 @@ const App = () => {
         </div>
         <style>{`
           @keyframes fadeInOut {
-            0% {
-              opacity: 0;
-            }
-            50% {
-              opacity: 1;
-            }
-            100% {
-              opacity: 0;
-            }
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
           }
         `}</style>
       </div>
     );
   }
 
-  return <RouterProvider router={MainRoutes} />;
+  return (
+    <>
+      <Helmet>
+        <title>GenuxSpace Finance | Smart Investing</title>
+        <meta
+          name="description"
+          content="Join HexaGuardx to start investing securely with smart plans tailored to your goals."
+        />
+        <meta
+          name="keywords"
+          content="HexaGuardx, crypto investment, smart plans, finance, ROI"
+        />
+        <meta name="author" content=" HexGuardx Team" />
+        <meta property="og:title" content="GenuxSpace Finance" />
+        <meta
+          property="og:description"
+          content="Secure and smart investment platform."
+        />
+        <meta property="og:image" content="./assets/mainlogo.png" />
+        <meta property="og:url" content="https://www.hexaguardx.com/" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
+
+      <RouterProvider router={MainRoutes} />
+    </>
+  );
 };
 
 export default App;

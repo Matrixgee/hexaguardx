@@ -52,6 +52,13 @@ const Overview = () => {
     );
   }
 
+  const calculateTrend = (current: number, previous: number): string => {
+    if (!previous || previous === 0) return "+0%";
+    const trend = ((current - previous) / previous) * 100;
+    const sign = trend >= 0 ? "+" : "";
+    return `${sign}${trend.toFixed(1)}%`;
+  };
+
   const CardContent = [
     {
       id: 1,
@@ -59,7 +66,7 @@ const Overview = () => {
       Title: "Account Balance",
       bg: "from-green-500 to-green-600",
       icon: <MdAttachMoney />,
-      trend: "+12.5%",
+      trend: calculateTrend(user.accountBalance, user.previousAccountBalance),
     },
     {
       id: 2,
@@ -67,7 +74,7 @@ const Overview = () => {
       Title: "Total Profit",
       bg: "from-purple-500 to-purple-600",
       icon: <GiMoneyStack />,
-      trend: "+8.2%",
+      trend: calculateTrend(user.totalProfit, user.previousTotalProfit),
     },
     {
       id: 3,
@@ -75,7 +82,7 @@ const Overview = () => {
       Title: "Total Bonus",
       bg: "from-indigo-400 to-indigo-500",
       icon: <GoGift />,
-      trend: "+5.1%",
+      trend: calculateTrend(user.totalBonus, user.previousTotalBonus),
     },
     {
       id: 4,
@@ -83,7 +90,7 @@ const Overview = () => {
       Title: "Referral Bonus",
       bg: "from-yellow-500 to-yellow-600",
       icon: <RiShuffleLine />,
-      trend: "+15.3%",
+      trend: calculateTrend(user.referralBonus, user.previousReferralBonus),
     },
     {
       id: 5,
@@ -91,7 +98,7 @@ const Overview = () => {
       Title: "Investment Plan",
       bg: "from-red-500 to-red-600",
       icon: <GiPayMoney />,
-      trend: "Active",
+      trend: user.investmentStatus || "Inactive",
     },
     {
       id: 6,
@@ -99,7 +106,7 @@ const Overview = () => {
       Title: "Active Plan",
       bg: "from-pink-500 to-pink-600",
       icon: <RiMoneyDollarCircleLine />,
-      trend: "Running",
+      trend: user.activeStatus || "None",
     },
     {
       id: 7,
@@ -107,7 +114,7 @@ const Overview = () => {
       Title: "Total Deposit",
       bg: "from-blue-500 to-blue-600",
       icon: <PiHandDepositFill />,
-      trend: "+22.7%",
+      trend: calculateTrend(user.totalDeposit, user.previousTotalDeposit),
     },
     {
       id: 8,
