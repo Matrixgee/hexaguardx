@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/theme";
-import { FaChevronDown, FaQuestionCircle, FaPhone } from "react-icons/fa";
+import { FaChevronDown, FaQuestionCircle, FaWhatsapp } from "react-icons/fa";
 
 interface FAQItem {
   question: string;
@@ -16,7 +16,7 @@ const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   // Your business phone number for direct calls
-  const businessPhoneNumber = "+1-903-330-0707";
+  // const businessPhoneNumber = "+1-903-330-0707";
   const faqs: FAQItem[] = [
     {
       question: "What investment options do you offer?",
@@ -69,10 +69,18 @@ const FAQSection = () => {
     navigate("/contact"); // Adjust this route to match your contact page route
   };
 
-  // Handle phone call
-  const handleScheduleCall = () => {
-    const phoneUrl = `tel:${businessPhoneNumber}`;
-    window.location.href = phoneUrl;
+  // WhatsApp contact function
+  const handleWhatsAppContact = () => {
+    const phoneNumber = "19033300707";
+    const message = encodeURIComponent(
+      "Hi! I'm interested in learning more about your investment plans. Could you help me choose the right plan?"
+    );
+
+    // WhatsApp URL format
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
+    // Open WhatsApp in new tab/window
+    window.open(whatsappUrl, "_blank");
   };
 
   const containerVariants = {
@@ -262,18 +270,19 @@ const FAQSection = () => {
             >
               Contact Support
             </motion.button>
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={handleScheduleCall}
+              onClick={handleWhatsAppContact}
               className={`inline-flex items-center px-8 py-4 rounded-lg font-medium text-lg transition-all border-2 ${
                 isDark
-                  ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
-                  : "border-primary text-primary hover:bg-primary hover:text-white"
+                  ? "border-green-400 text-green-400 hover:bg-green-400 hover:text-white"
+                  : "border-green-500 text-green-600 hover:bg-green-500 hover:text-white"
               } shadow-lg hover:shadow-xl`}
             >
-              <FaPhone className="w-4 h-4 mr-2" />
-              Schedule a Call
+              <FaWhatsapp className="w-4 h-4 mr-2" />
+              Contact Us on WhatsApp
             </motion.button>
           </div>
         </motion.div>
