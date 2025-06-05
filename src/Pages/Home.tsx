@@ -3,7 +3,7 @@ import NotificationModal from "../Components/NotificationModal";
 import Hero from "./Hero";
 import HowItWorks from "./HowItWorks";
 import FAQ from "./FAQ";
-import InvestmentPlan from "./InvestmentPlan";
+// import InvestmentPlan from "./InvestmentPlan";
 import Testimonials from "./Testimonals";
 import Services from "./services";
 
@@ -159,7 +159,7 @@ const Home: React.FC = () => {
       <main>
         <Hero />
         <HowItWorks />
-        <InvestmentPlan />
+        {/* <InvestmentPlan /> */}
         <Services />
         <Testimonials />
         <FAQ />
