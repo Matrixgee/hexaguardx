@@ -65,7 +65,7 @@ const App = () => {
           content="HexaGuardx, crypto investment, smart plans, finance, ROI"
         />
         <meta name="author" content=" HexGuardx Team" />
-        <meta property="og:title" content="GenuxSpace Finance" />
+        <meta property="og:title" content="HexaGuardx Finance" />
         <meta
           property="og:description"
           content="Secure and smart investment platform."

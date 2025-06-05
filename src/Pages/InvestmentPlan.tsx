@@ -83,7 +83,7 @@ const InvestmentPlan = () => {
     );
 
     // WhatsApp URL format
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}\\`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
     // Open WhatsApp in new tab/window
     window.open(whatsappUrl, "_blank");
