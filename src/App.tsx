@@ -55,7 +55,7 @@ const App = () => {
   return (
     <>
       <Helmet>
-        <title>GenuxSpace Finance | Smart Investing</title>
+        <title>HexaGuardx Finance | Smart Investing</title>
         <meta
           name="description"
           content="Join HexaGuardx to start investing securely with smart plans tailored to your goals."
